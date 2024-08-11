@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: "JetBrains Mono", monospace;
+    @apply scroll-smooth overflow-x-hidden;
+    @apply bg-slate-950 text-slate-100;
+    @apply text-base antialiased;
+}
+
+::-webkit-scrollbar {
+    @apply w-2;
+}
+::-webkit-scrollbar-track {
+    @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+    @apply bg-slate-900;
+}
