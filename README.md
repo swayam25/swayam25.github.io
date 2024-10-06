@@ -10,7 +10,7 @@ My portfolio website
 
 1. Clone this repository
     ```sh
-    git clone <repository url> swayam
+    git clone https://github.com/swayam25/swayam25.github.io swayam
     cd swayam
     ```
 
