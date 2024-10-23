@@ -9,7 +9,6 @@
     import SimpleIconsFastapi from "~icons/simple-icons/fastapi";
     import SimpleIconsSvelte from "~icons/simple-icons/svelte";
     import SimpleIconsTailwindcss from "~icons/simple-icons/tailwindcss";
-    import Button from "$lib/components/Button.svelte";
 </script>
 
 <svelte:head>
