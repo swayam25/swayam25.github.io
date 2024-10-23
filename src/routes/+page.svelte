@@ -10,16 +10,6 @@
     import SimpleIconsSvelte from "~icons/simple-icons/svelte";
     import SimpleIconsTailwindcss from "~icons/simple-icons/tailwindcss";
     import Button from "$lib/components/Button.svelte";
-
-    let dim: boolean;
-    $: dim = false;
-
-    const enableDim = () => {
-        dim = true;
-    };
-    const disableDim = () => {
-        dim = false;
-    };
 </script>
 
 <svelte:head>
@@ -72,13 +62,11 @@
             <!-- Projects -->
             <section aria-label="Projects" class="mt-10">
                 <h1 class="text-xl font-semibold visible lg:hidden">PROJECTS</h1>
-                <div class="mt-2 flex flex-col gap-y-5">
+                <div class="mt-2 flex flex-col gap-y-5 group ">
                     {#each Object.entries(projects) as [name, data]}
                         <a
                             href={data.url} target="_blank"
-                            class="hover:bg-slate-800 hover:!opacity-100 rounded-lg p-2 transition-all duration-200 group"
-                            on:mouseenter={enableDim} on:mouseleave={disableDim}
-                            class:opacity-50={dim}
+                            class="hover:bg-slate-800 hover:!opacity-100 rounded-lg p-2 transition-all duration-200 group/item group-hover:opacity-50"
                         >
                             <div class="flex flex-col md:flex-row justify-start items-center md:items-start gap-y-4 md:gap-y-0 md:gap-x-4">
                                 <img src={data.img} alt={name} class="rounded-lg object-cover border-2 border-slate-800 md:h-24 md:w-48" />
@@ -86,7 +74,7 @@
                                     <div class="w-full flex justify-between items-center">
                                         <div class="flex justify-start items-center gap-x-1">
                                             <h2 class="text-lg font-semibold">{name}</h2>
-                                            <PhArrowUpRightBold class="size-4 group-hover:translate-x-2 group-hover:-translate-y-0.5 transition-transform" />
+                                            <PhArrowUpRightBold class="size-4 group-hover/item:translate-x-2 group-hover/item:-translate-y-0.5 transition-transform" />
                                         </div>
                                         <p class="text-slate-400 text-sm font-semibold">{data.time}</p>
                                     </div>
