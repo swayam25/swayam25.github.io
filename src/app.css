@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* jetbrains-mono-latin-wght-normal */
 @font-face {
     font-family: "JetBrains Mono Variable";
     font-style: normal;
