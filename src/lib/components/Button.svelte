@@ -1,35 +1,44 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy';
     import { goto } from "$app/navigation";
 
-    let className: string = "";
-    export { className as class };
-    export let size: "sm" | "md" | "lg" | "xl" = "md";
-    export let href: string;
-    export let disabled: boolean = false;
 
-    let sizeClass: string = "";
-    $: {
+    interface Props {
+        class?: string;
+        size?: "sm" | "md" | "lg" | "xl";
+        href: string;
+        disabled?: boolean;
+        children?: import('svelte').Snippet;
+    }
+
+    let {
+        class: className = "",
+        size = "md",
+        href,
+        disabled = false,
+        children
+    }: Props = $props();
+
+    let sizeClass: string = $derived.by(() => {
         switch (size) {
             case "sm":
-                sizeClass = "text-sm px-2 py-1";
-                break;
+                return "text-sm px-2 py-1";
             case "md":
-                sizeClass = "text-base px-4 py-2";
-                break;
+                return "text-base px-4 py-2";
             case "lg":
-                sizeClass = "text-lg px-4 py-3";
-                break;
+                return "text-lg px-4 py-3";
             case "xl":
-                sizeClass = "text-xl px-6 py-4";
-                break;
+                return "text-xl px-6 py-4";
+            default:
+                return "";
         }
-    }
+    });
 </script>
 
 <button
     class="bg-slate-800 hover:bg-opacity-80 transition-opacity rounded-lg {sizeClass} flex space-x-1 justify-center items-center {className}"
-    on:click={() => {href ? goto(href) : null;}}
+    onclick={() => {href ? goto(href) : null;}}
     disabled={disabled}
 >
-    <slot />
+    {@render children?.()}
 </button>

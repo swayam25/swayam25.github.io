@@ -37,7 +37,7 @@
             <div class="flex justify-start items-center gap-x-4 mt-5">
                 {#each Object.entries(socials) as [name, data]}
                     <a href={data.url} target="_blank" title={name} class="text-slate-400 hover:text-slate-100 transition-colors duration-200">
-                        <svelte:component this={data.icon} class="size-8" />
+                        <data.icon class="size-8" />
                     </a>
                 {/each}
             </div>
