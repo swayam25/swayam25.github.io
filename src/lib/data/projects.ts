@@ -1,4 +1,4 @@
-type Project = {
+interface Project {
     [key: string]: {
         desc: string;
         url: string;

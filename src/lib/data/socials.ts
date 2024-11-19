@@ -2,7 +2,7 @@ import RiGithubFill from "~icons/ri/github-fill";
 import RiDiscordFill from "~icons/ri/discord-fill";
 import RiSpotifyFill from "~icons/ri/spotify-fill";
 
-type Social = {
+interface Social {
     [key: string]: {
         url: string;
         icon: any;
