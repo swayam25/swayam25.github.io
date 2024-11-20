@@ -177,6 +177,8 @@
             } else {
                 cmdObj.func(args);
             }
+        } else if (cmd === "") {
+            output.update((prev) => [...prev, [" ", ""]]);
         } else {
             output.update((prev) => [...prev, [input, `Command not found: ${cmd}. Type "help" for a list of commands.`]]);
         }
