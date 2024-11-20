@@ -13,7 +13,6 @@
     let input: string = $state("");
     let args: string[] = $derived.by(() => input.split(" "));
     let output: Writable<{ inp: string, res: string; isError: boolean }[]> = writable([]);
-    let dir: string = $state("~");
 
     interface Cmds {
         [key: string]: {
@@ -252,7 +251,7 @@
             </div>
         {/each}
         <div class="flex items-center">
-            <p class="text-blue-300 whitespace-nowrap">{dir}</p>
+            <p class="text-blue-300 whitespace-nowrap">~</p>
             <MaterialSymbolsArrowForwardIosRounded class="size-4 text-green-300 mr-1" />
             <input type="text" bind:value={input} onkeydown={(e) => e.key === "Enter" && handleCommand()} class="w-full border-none focus:outline-none bg-transparent" />
         </div>
