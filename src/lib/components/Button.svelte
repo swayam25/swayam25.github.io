@@ -5,15 +5,17 @@
     interface Props {
         class?: string;
         size?: "sm" | "md" | "lg" | "xl";
-        href: string;
+        href?: string;
+        event?: () => void;
         disabled?: boolean;
-        children?: import('svelte').Snippet;
+        children?: import("svelte").Snippet;
     }
 
     let {
         class: className = "",
         size = "md",
-        href,
+        href = "",
+        event = () => {},
         disabled = false,
         children
     }: Props = $props();
@@ -34,10 +36,8 @@
     });
 </script>
 
-<button
-    class="bg-slate-800 hover:bg-opacity-80 transition-opacity rounded-lg {sizeClass} flex space-x-1 justify-center items-center {className}"
-    onclick={() => {href ? goto(href) : null;}}
-    disabled={disabled}
->
-    {@render children?.()}
-</button>
+<div class="bg-slate-950 z-50 rounded-lg {className}">
+    <button class="bg-slate-800 hover:bg-opacity-80 transition-all flex space-x-1 justify-center items-center {sizeClass} rounded-lg" onclick={() => {href != "" ? goto(href) : null; event != null ? event() : null}} disabled={disabled}>
+        {@render children?.()}
+    </button>
+</div>

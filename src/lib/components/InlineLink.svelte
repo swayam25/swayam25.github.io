@@ -4,7 +4,7 @@
         class?: string;
         href: string;
         icon?: any;
-        children?: import('svelte').Snippet;
+        children?: import("svelte").Snippet;
     }
 
     let {
@@ -17,7 +17,7 @@
 
 <a
     href={href} target="_blank"
-    class="inline-block border-b text-slate-100 border-slate-800 hover:border-slate-100 transition-colors duration-200 leading-1 {className}"
+    class="inline-block border-b text-slate-100 border-slate-800 hover:border-slate-100 transition-colors duration-200 {className}"
 >
     {#if icon}
         {@const SvelteComponent = icon}
