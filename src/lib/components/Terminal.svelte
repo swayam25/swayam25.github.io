@@ -201,7 +201,7 @@
     }
 
     function makeHyperlink(text: string, href: string) {
-        return `<a href="${href}" class="text-cyan-400 leading-4 border-b border-transparent hover:border-cyan-400 duration-200">${text}</a>`;
+        return `<a href="${href}" target="_blank" class="text-cyan-400 leading-4 border-b border-transparent hover:border-cyan-400 duration-200">${text}</a>`;
     }
 
     onMount(() => {
