@@ -12,7 +12,7 @@
     let { defaultMode = $bindable() }: { defaultMode: boolean } = $props();
     let input: string = $state("");
     let args: string[] = $derived.by(() => input.split(" "));
-    let output: Writable<[string, string][]> = writable([]);
+    let output: Writable<{ inp: string, res: string; isError: boolean }[]> = writable([]);
     let dir: string = $state("~");
 
     interface Cmds {
@@ -46,9 +46,11 @@
         socials: {
             help: "List all socials",
             func: () => {
-                output.update((prev) => [...prev, [input,
-                    `I'm on ${Object.keys(socials).map((social) => makeHyperlink(social, socials[social].url)).join(", ")}.`
-                ]]);
+                output.update((prev) => [...prev, {
+                    inp: input,
+                    res: `I'm on ${Object.keys(socials).map((social) => makeHyperlink(social, socials[social].url)).join(", ")}.`,
+                    isError: false
+                }]);
             },
             opts: [
                 {
@@ -56,14 +58,18 @@
                     help: "Opens socials/projects",
                     func: () => {
                         const social: string = args.slice(2).join(" ");
-                        const socialName: string | undefined = Object.keys(socials).find((s) => s === social || s.toLowerCase() === social)
+                        const socialName: string | undefined = Object.keys(socials).find((s) => s === social || s.toLowerCase() === social);
                         if (socialName) {
-                            output.update((prev) => [...prev, [input,
-                                `Opening ${makeHyperlink(social, socials[socialName].url)}...`
-                            ]]);
+                            output.update((prev) => [...prev, {
+                                inp: input,
+                                res: `Opening ${makeHyperlink(social, socials[socialName].url)}...`,
+                                isError: false
+                            }]);
                             window.open(socials[socialName].url, "_blank");
+                        } else if (social === "") {
+                            output.update((prev) => [...prev, { inp: input, res: `No social provided. Type "socials" for a list of socials.`, isError: true }]);
                         } else {
-                            output.update((prev) => [...prev, [input, `Social not found: ${social}. Type "socials" for a list of socials.`]]);
+                            output.update((prev) => [...prev, { inp: input, res: `Social not found: ${social}. Type "socials" for a list of socials.`, isError: true }]);
                         }
                     }
                 }
@@ -72,24 +78,30 @@
         projects: {
             help: "List all projects",
             func: () => {
-                output.update((prev) => [...prev, [input,
-                    Object.keys(projects).map((project) => `${makeHyperlink(project, projects[project].url)}<br>  ${projects[project].desc}`).join("<br>")
-                ]]);
+                output.update((prev) => [...prev, {
+                    inp: input,
+                    res: Object.keys(projects).map((project) => `${makeHyperlink(project, projects[project].url)}<br>  ${projects[project].desc}`).join("<br>"),
+                    isError: false
+                }]);
             },
             opts: [
                 {
                     opts: ["-o", "--open"],
                     help: "Opens socials/projects",
                     func: () => {
-                        let project: any = args.slice(2).join(" ");
-                        project = Object.keys(projects).find((p) => p === project || p.toLowerCase() === project)
-                        if (project) {
-                            output.update((prev) => [...prev, [input,
-                                `Opening ${makeHyperlink(project, projects[project].url)}...`
-                            ]]);
-                            window.open(projects[project].url, "_blank");
+                        const project: any = args.slice(2).join(" ");
+                        const projectName = Object.keys(projects).find((p) => p === project || p.toLowerCase() === project);
+                        if (projectName) {
+                            output.update((prev) => [...prev, {
+                                inp: input,
+                                res: `Opening ${makeHyperlink(projectName, projects[projectName].url)}...`,
+                                isError: false
+                            }]);
+                            window.open(projects[projectName].url, "_blank");
+                        } else if (project === "") {
+                            output.update((prev) => [...prev, { inp: input, res: `No project provided. Type "projects" for a list of projects.`, isError: true }]);
                         } else {
-                            output.update((prev) => [...prev, [input, `Project not found: ${project}. Type "projects" for a list of projects.`]]);
+                            output.update((prev) => [...prev, { inp: input, res: `Project not found: ${project}. Type "projects" for a list of projects.`, isError: true }]);
                         }
                     }
                 }
@@ -112,8 +124,9 @@
         const maxOptLength = Math.max(...Object.keys(uniqueOpts).map(opt => opt.length));
         const maxLength = Math.max(maxCmdLength, maxOptLength);
 
-        output.update((prev) => [...prev, [input,
-            [
+        output.update((prev) => [...prev, {
+            inp: input,
+            res: [
                 "Usage:",
                 `  [<span class="text-cyan-400">COMMAND</span>] [<span class="text-cyan-400">OPTION</span>]`,
                 "",
@@ -131,8 +144,9 @@
                     const randomCmdOpt = cmdOpts.sort(() => 0.5 - Math.random())[0] || "";
                     return `  <span class="text-cyan-400">${cmd}</span> ${randomCmdOpt}`;
                 })
-            ].join("\n")
-        ]]);
+            ].join("\n"),
+            isError: false
+        }]);
     }
 
     function showCommandHelp() {
@@ -140,9 +154,9 @@
         const cmdObj = cmds[cmd];
         const maxLength = Math.max(...(cmdObj.opts || []).map(opt => opt.opts.join(", ").length));
 
-        output.update((prev) => [...prev, [input,
-            [
-                "Usage:",
+        output.update((prev) => [...prev, {
+            inp: input,
+            res: ["Usage:",
                 `  <span class="text-cyan-400">${cmd}</span> ${cmdObj.opts ? "[<span class=\"text-cyan-400\">OPTION</span>]" : ""}`,
                 "",
                 "Description:",
@@ -152,8 +166,9 @@
                 cmdObj.opts ? cmdObj.opts.map(opt => {
                     return `  <span class="text-cyan-400">${opt.opts.join(", ").padEnd(maxLength)}</span> ${opt.help}`;
                 }).join("<br>") : "  No options available.",
-            ].join("<br>")
-        ]]);
+            ].join("<br>"),
+            isError: false
+        }]);
     }
 
     function handleCommand() {
@@ -169,18 +184,18 @@
                     if (optObj) {
                         optObj.func(args);
                     } else {
-                        output.update((prev) => [...prev, [input, `Option not found: ${opt}. Type "${cmd} --help" for more information.`]]);
+                        output.update((prev) => [...prev, { inp: input, res: `Option not found: ${opt}. Type "${cmd} --help" for more information.`, isError: true }]);
                     }
                 } else {
-                    output.update((prev) => [...prev, [input, `Option not found: ${opt}. Type "${cmd} --help" for more information.`]]);
+                    output.update((prev) => [...prev, { inp: input, res: `Option not found: ${opt}. Type "${cmd} --help" for more information.`, isError: true }]);
                 }
             } else {
                 cmdObj.func(args);
             }
         } else if (cmd === "") {
-            output.update((prev) => [...prev, [" ", ""]]);
+            output.update((prev) => [...prev, { inp: " ", res: "", isError: false }]);
         } else {
-            output.update((prev) => [...prev, [input, `Command not found: ${cmd}. Type "help" for a list of commands.`]]);
+            output.update((prev) => [...prev, { inp: input, res: `Command not found: ${cmd}. Type "help" for a list of commands.`, isError: true }]);
         }
         input = "";
     }
@@ -190,7 +205,7 @@
     }
 
     onMount(() => {
-        output.set([["", "Welcome to the terminal. Type \"help\" for a list of commands."]]);
+        output.set([{ inp: "", res: "Welcome to the terminal. Type \"help\" for a list of commands.", isError: false }]);
         document.onclick = () => {
             const input = document.querySelector("input");
             input && input.focus();
@@ -221,15 +236,19 @@
         </div>
     </div>
     <div class="whitespace-pre-wrap overflow-y-scroll overflow-hidden text-sm">
-        {#each $output as [cmd, res]}
+        {#each $output as { inp, res, isError }, i}
             <div transition:fade={{ duration: 100 }} class="flex flex-col">
-                {#if cmd}
+                {#if inp}
                     <span class="flex space-x-1 items-center">
                         <MaterialSymbolsArrowForwardIosRounded class="block size-4 text-slate-300" />
-                        <p class="max-w-fit">{cmd}</p>
+                        <p class="max-w-fit">{inp}</p>
                     </span>
                 {/if}
-                <span>{@html res}</span>
+                {#if isError}
+                    <span>{res}</span>
+                {:else}
+                    <span>{@html res}</span>
+                {/if}
             </div>
         {/each}
         <div class="flex items-center">
