@@ -41,4 +41,4 @@ My portfolio website
     npm run preview -- --port 2500
     ```
 
-4. URL is same as the [installation guide](#-installation).
+4. URL is same as in the [installation guide](#-installation).
