@@ -18,34 +18,22 @@
     });
 
     function handleCommand() {
-        const cmd = args[0];
+        const [cmd, opt] = args;
         const cmdObj = cmds[cmd];
+
         if (cmdObj) {
-            if (cmdObj.opts && args.length > 1) {
-                const opt = args[1] || undefined;
-                if (opt?.startsWith("-")) {
-                    if (opt === "--help" || opt === "-h") {
-                        showCommandHelp(args, input);
-                    } else if (cmdObj.opts) {
-                        const optObj = cmdObj.opts.find((o) => o.opts.includes(opt));
-                        if (optObj) {
-                            optObj.func(args, input);
-                        } else {
-                            output.update((prev) => [...prev, { inp: input, res: `Option not found: ${opt}. Type "${cmd} --help" for more information.`, isError: true }]);
-                        }
-                    } else {
-                        output.update((prev) => [...prev, { inp: input, res: `Option not found: ${opt}. Type "${cmd} --help" for more information.`, isError: true }]);
-                    }
+            if (opt?.startsWith("-")) {
+                if (opt === "--help" || opt === "-h") {
+                    showCommandHelp(args, input);
                 } else {
-                    cmdObj.func(args, input);
+                    const optObj = cmdObj.opts?.find((o) => o.opts.includes(opt));
+                    optObj ? optObj.func(args, input) : output.update((prev) => [...prev, { inp: input, res: `Option not found: ${opt}.`, isError: true }]);
                 }
             } else {
                 cmdObj.func(args, input);
             }
-        } else if (cmd === "") {
-            output.update((prev) => [...prev, { inp: " ", res: "", isError: false }]);
         } else {
-            output.update((prev) => [...prev, { inp: input, res: `Command not found: ${cmd}. Type "help" for a list of commands.`, isError: true }]);
+            output.update((prev) => [...prev, { inp: input, res: cmd ? `Command not found: ${cmd}. Type "help" for a list of commands.` : "", isError: !!cmd }]);
         }
         input = "";
     }
