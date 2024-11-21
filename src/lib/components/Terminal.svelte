@@ -11,6 +11,7 @@
     let { defaultMode = $bindable() }: { defaultMode: boolean } = $props();
     let input: string = $state("");
     let args: string[] = $derived.by(() => input.split(" "));
+    let lastOutput = $derived.by(() => $output[$output.length - 1] || { isError: false });
 
     setDefaultModeSetter((value: boolean) => {
         defaultMode = value;
@@ -94,7 +95,7 @@
         {/each}
         <div class="flex items-center">
             <p class="text-blue-300 whitespace-nowrap">~</p>
-            <MaterialSymbolsArrowForwardIosRounded class="size-4 text-green-300 mr-1" />
+            <MaterialSymbolsArrowForwardIosRounded class="size-4 {lastOutput.isError ? "text-red-300" : "text-green-300"} mr-1" />
             <input type="text" bind:value={input} onkeydown={(e) => e.key === "Enter" && handleCommand()} class="w-full border-none focus:outline-none bg-transparent" />
         </div>
     </div>

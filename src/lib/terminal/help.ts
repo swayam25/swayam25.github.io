@@ -26,7 +26,8 @@ export function showHelp(args: string[], input: string) {
             "",
             "Options:",
             ...Object.entries(uniqueOpts).map(([opt, help]) => {
-                return `  <span class="text-cyan-400">${opt.padEnd(maxLength)}</span> ${help}`;
+                const coloredOpts = opt.split(", ").map(o => `<span class="text-cyan-400">${o}</span>`).join(", ");
+                return `  ${coloredOpts.padEnd(maxLength + (coloredOpts.length - opt.length))} ${help}`;
             }),
             "",
             "Examples:",
@@ -35,7 +36,7 @@ export function showHelp(args: string[], input: string) {
                 const randomCmdOpt = cmdOpts.sort(() => 0.5 - Math.random())[0] || "";
                 return `  <span class="text-cyan-400">${cmd}</span> ${randomCmdOpt}`;
             })
-        ].join("\n"),
+        ].join("<br>"),
         isError: false
     }]);
 }
@@ -55,7 +56,8 @@ export function showCommandHelp(args: string[], input: string) {
             "",
             "Options:",
             cmdObj.opts ? cmdObj.opts.map(opt => {
-                return `  <span class="text-cyan-400">${opt.opts.join(", ").padEnd(maxLength)}</span> ${opt.help}`;
+                const coloredOpts = opt.opts.map(o => `<span class="text-cyan-400">${o}</span>`).join(", ");
+                return `  ${coloredOpts.padEnd(maxLength + (coloredOpts.length - opt.opts.join(", ").length))} ${opt.help}`;
             }).join("<br>") : "  No options available.",
         ].join("<br>"),
         isError: false
