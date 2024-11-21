@@ -1,7 +1,7 @@
 import { writable, type Writable } from "svelte/store";
 import socials from "$lib/data/socials";
 import projects from "$lib/data/projects";
-import { showHelp, showCommandHelp } from "$lib/terminal/help";
+import { showHelp } from "$lib/terminal/help";
 
 export const output: Writable<{ inp: string, res: string; isError: boolean }[]> = writable([]);
 let defaultModeSetter: (value: boolean) => void;

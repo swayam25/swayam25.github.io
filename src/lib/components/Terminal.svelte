@@ -21,19 +21,23 @@
         const cmd = args[0];
         const cmdObj = cmds[cmd];
         if (cmdObj) {
-            const opt = args[1] || undefined;
-            if (opt) {
-                if (opt === "--help" || opt === "-h") {
-                    showCommandHelp(args, input);
-                } else if (cmdObj.opts) {
-                    const optObj = cmdObj.opts.find((o) => o.opts.includes(opt));
-                    if (optObj) {
-                        optObj.func(args, input);
+            if (cmdObj.opts && args.length > 1) {
+                const opt = args[1] || undefined;
+                if (opt?.startsWith("-")) {
+                    if (opt === "--help" || opt === "-h") {
+                        showCommandHelp(args, input);
+                    } else if (cmdObj.opts) {
+                        const optObj = cmdObj.opts.find((o) => o.opts.includes(opt));
+                        if (optObj) {
+                            optObj.func(args, input);
+                        } else {
+                            output.update((prev) => [...prev, { inp: input, res: `Option not found: ${opt}. Type "${cmd} --help" for more information.`, isError: true }]);
+                        }
                     } else {
                         output.update((prev) => [...prev, { inp: input, res: `Option not found: ${opt}. Type "${cmd} --help" for more information.`, isError: true }]);
                     }
                 } else {
-                    output.update((prev) => [...prev, { inp: input, res: `Option not found: ${opt}. Type "${cmd} --help" for more information.`, isError: true }]);
+                    cmdObj.func(args, input);
                 }
             } else {
                 cmdObj.func(args, input);
