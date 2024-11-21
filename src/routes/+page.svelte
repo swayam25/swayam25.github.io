@@ -1,6 +1,5 @@
 <script lang="ts">
     import { fade } from "svelte/transition";
-    import { writable, type Writable } from "svelte/store";
     import Terminal from "$lib/components/Terminal.svelte";
     import Button from "$lib/components/Button.svelte";
     import socials from "$lib/data/socials";
@@ -16,7 +15,7 @@
     import SolarWidgetOutline from "~icons/solar/widget-outline";
     import SolarProgrammingOutline from "~icons/solar/programming-outline";
 
-    let defaultMode: Writable<boolean> = writable(false);
+    let defaultMode: boolean = false;
 </script>
 
 <svelte:head>
@@ -25,7 +24,7 @@
 
 <div class="min-h-screen lg:max-w-screen-xl block m-auto px-5">
     <!-- Toggle button -->
-    <Button size="md" class="fixed bottom-0 right-0 m-5" event={() => { defaultMode.update((prev) => !prev); }}>
+    <Button size="md" class="fixed bottom-0 right-0 m-5" event={() => { defaultMode = !defaultMode; }}>
         {#if defaultMode}
             <SolarProgrammingOutline class="size-fit" />
             <span>Terminal</span>
