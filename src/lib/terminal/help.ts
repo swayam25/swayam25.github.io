@@ -11,7 +11,6 @@ export function showHelp(args: string[], input: string) {
         }
         });
     });
-    console.log(...Object.keys(uniqueOpts).map(opt => opt));
     const maxOptLength = Math.max(...Object.keys(uniqueOpts).map(opt => opt.length));
     const maxLength = Math.max(maxCmdLength, maxOptLength);
 

@@ -37,6 +37,16 @@ export const cmds: Cmds = {
             }
         }
     },
+    about: {
+        help: "About me",
+        func: (args, input) => {
+            output.update((prev) => [...prev, {
+                inp: input,
+                res: `Hi, I'm <span class="text-cyan-400">Swayam</span>, a full stack developer. I have a passion for creating elegant and efficient code that delivers exceptional user experiences.`,
+                isError: false
+            }]);
+        }
+    },
     socials: {
         help: "List all socials",
         func: (args, input) => {
