@@ -15,7 +15,7 @@
     import SolarWidgetOutline from "~icons/solar/widget-outline";
     import SolarProgrammingOutline from "~icons/solar/programming-outline";
 
-    let defaultMode: boolean = false;
+    let defaultMode: boolean = true;
 </script>
 
 <svelte:head>
