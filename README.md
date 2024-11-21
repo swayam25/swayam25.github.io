@@ -25,3 +25,20 @@ My portfolio website
     ```
 
 4. URL: `http://localhost:2500`
+
+
+## 🌐 Production
+
+1. Follow the steps 1 & 2 from the [installation guide](#-installation). *Ignore if already done.*
+
+2. Build the app
+    ```sh
+    npm run build
+    ```
+
+3. Preview the app
+    ```sh
+    npm run preview -- --port 2500
+    ```
+
+4. URL: `http://localhost:2500`
