@@ -24,9 +24,6 @@ My portfolio website
     npm run dev -- --port 2500
     ```
 
-4. URL: `http://localhost:2500`
-
-
 ## 🌐 Production
 
 1. Follow steps 1 & 2 from the [installation guide](#-installation). *Ignore if already done.*
@@ -40,5 +37,3 @@ My portfolio website
     ```sh
     npm run preview -- --port 2500
     ```
-
-4. URL is same as the [installation guide](#-installation).
