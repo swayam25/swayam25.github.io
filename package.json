@@ -12,7 +12,7 @@
 	"devDependencies": {
 		"@iconify/json": "^2.2.176",
 		"@sveltejs/adapter-static": "^3.0.1",
-		"@sveltejs/kit": "^2.5.27",
+		"@sveltejs/kit": "^2.8.3",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"autoprefixer": "^10.4.17",
 		"postcss": "^8.4.33",
