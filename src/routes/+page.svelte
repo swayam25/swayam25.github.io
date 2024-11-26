@@ -35,7 +35,7 @@
     </Button>
     {#if defaultMode}
         <!-- Main Page -->
-        <div in:fade class="lg:flex lg:justify-between lg:items-start pt-10 lg:pt-0 transition-all">
+        <div in:fade class="lg:flex lg:justify-between lg:items-start pt-10 lg:pt-0 transition-all py-5 lg:py-0">
             <!-- Sidebar -->
             <header class="lg:top-0 lg:py-24 lg:sticky flex flex-col justify-between items-start lg:h-screen lg:w-1/2 transition-all">
                 <!-- Profile -->
