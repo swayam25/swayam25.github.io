@@ -39,7 +39,7 @@
     }
 
     onMount(() => {
-        output.set([{ inp: "", res: "Welcome to the terminal. Type \"help\" for a list of commands.", isError: false }]);
+        output.set([{ inp: "", res: "Welcome to the terminal. Type \"help\" for a list of commands." }]);
         document.onclick = () => {
             const input = document.querySelector("input");
             input && input.focus();
@@ -70,7 +70,7 @@
         </div>
     </div>
     <div class="whitespace-pre-wrap overflow-y-scroll overflow-hidden text-sm">
-        {#each $output as { inp, res, isError }, i}
+        {#each $output as { inp, res, isError, restrict }, i}
             <div transition:fade={{ duration: 100 }} class="flex flex-col">
                 {#if inp}
                     <span class="flex space-x-1 items-center">
@@ -78,7 +78,7 @@
                         <p class="max-w-fit">{inp}</p>
                     </span>
                 {/if}
-                {#if isError}
+                {#if isError || restrict}
                     <span>{res}</span>
                 {:else}
                     <span>{@html res}</span>

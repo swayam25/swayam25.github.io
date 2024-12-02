@@ -3,7 +3,7 @@ import socials from "$lib/data/socials";
 import projects from "$lib/data/projects";
 import { showHelp } from "$lib/terminal/help";
 
-export const output: Writable<{ inp: string, res: string; isError: boolean }[]> = writable([]);
+export const output: Writable<{ inp: string, res: string; isError?: boolean, restrict?: boolean }[]> = writable([]);
 let defaultModeSetter: (value: boolean) => void;
 
 interface Cmds {
@@ -42,8 +42,7 @@ export const cmds: Cmds = {
         func: (args, input) => {
             output.update((prev) => [...prev, {
                 inp: input,
-                res: `Hi, I'm <span class="text-cyan-400">Swayam</span>, a full stack developer. I have a passion for creating elegant and efficient code that delivers exceptional user experiences.`,
-                isError: false
+                res: `Hi, I'm <span class="text-cyan-400">Swayam</span>, a full stack developer. I have a passion for creating elegant and efficient code that delivers exceptional user experiences.`
             }]);
         }
     },
@@ -52,8 +51,7 @@ export const cmds: Cmds = {
         func: (args, input) => {
             output.update((prev) => [...prev, {
                 inp: input,
-                res: `I'm on ${Object.keys(socials).map((social) => makeHyperlink(social, socials[social].url)).join(", ")}.`,
-                isError: false
+                res: `I'm on ${Object.keys(socials).map((social) => makeHyperlink(social, socials[social].url)).join(", ")}.`
             }]);
         },
         opts: [
@@ -66,8 +64,7 @@ export const cmds: Cmds = {
                     if (socialName) {
                         output.update((prev) => [...prev, {
                             inp: input,
-                            res: `Opening ${makeHyperlink(social, socials[socialName].url)}...`,
-                            isError: false
+                            res: `Opening ${makeHyperlink(social, socials[socialName].url)}...`
                         }]);
                         window.open(socials[socialName].url, "_blank");
                     } else if (social === "") {
@@ -84,8 +81,7 @@ export const cmds: Cmds = {
         func: (args, input) => {
             output.update((prev) => [...prev, {
                 inp: input,
-                res: Object.keys(projects).map((project) => `${makeHyperlink(project, projects[project].url)}<br>  ${projects[project].desc}`).join("<br>"),
-                isError: false
+                res: Object.keys(projects).map((project) => `${makeHyperlink(project, projects[project].url)}<br>  ${projects[project].desc}`).join("<br>")
             }]);
         },
         opts: [
@@ -98,8 +94,7 @@ export const cmds: Cmds = {
                     if (projectName) {
                         output.update((prev) => [...prev, {
                             inp: input,
-                            res: `Opening ${makeHyperlink(projectName, projects[projectName].url)}...`,
-                            isError: false
+                            res: `Opening ${makeHyperlink(projectName, projects[projectName].url)}...`
                         }]);
                         window.open(projects[projectName].url, "_blank");
                     } else if (project === "") {
@@ -110,6 +105,39 @@ export const cmds: Cmds = {
                 }
             }
         ]
+    },
+    echo: {
+        help: "Prints the given text",
+        func: (args, input) => {
+            output.update((prev) => [...prev, {
+                inp: input,
+                res: args.slice(1).join(" "),
+                restrict: true
+            }]);
+        }
+    },
+    cowsay: {
+        help: "Generate a cow saying something",
+        func: (args, input) => {
+            const text = args.slice(1).join(" ");
+            const border = "-".repeat(text.length + 2);
+            const cowParts = [
+                ` ${border}`,
+                `< ${text} >`,
+                ` ${border}`,
+                `        \\    ^__^`,
+                `         \\   (oo)\\_______`,
+                `             (__)\\       )\\/\\`,
+                `                 ||----w |`,
+                `                 ||     ||`
+            ];
+            const cow = cowParts.join("\n");
+            output.update((prev) => [...prev, {
+                inp: input,
+                res: `${cow}`,
+                restrict: true
+            }]);
+        }
     }
 };
 

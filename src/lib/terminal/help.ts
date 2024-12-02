@@ -35,8 +35,7 @@ export function showHelp(args: string[], input: string) {
                 const randomCmdOpt = cmdOpts.sort(() => 0.5 - Math.random())[0] || "";
                 return `  <span class="text-cyan-400">${cmd}</span> ${randomCmdOpt}`;
             })
-        ].join("<br>"),
-        isError: false
+        ].join("<br>")
     }]);
 }
 
@@ -58,7 +57,6 @@ export function showCommandHelp(args: string[], input: string) {
                 const coloredOpts = opt.opts.map(o => `<span class="text-cyan-400">${o}</span>`).join(", ");
                 return `  ${coloredOpts.padEnd(maxLength + (coloredOpts.length - opt.opts.join(", ").length))} ${opt.help}`;
             }).join("<br>") : "  No options available.",
-        ].join("<br>"),
-        isError: false
+        ].join("<br>")
     }]);
 }
