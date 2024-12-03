@@ -74,7 +74,7 @@
             <div transition:fade={{ duration: 100 }} class="flex flex-col">
                 {#if inp}
                     <span class="flex space-x-1 items-center">
-                        <MaterialSymbolsArrowForwardIosRounded class="block size-4 text-slate-300" />
+                        <MaterialSymbolsArrowForwardIosRounded class="block size-4 text-slate-400" />
                         <p class="max-w-fit">{inp}</p>
                     </span>
                 {/if}
@@ -86,8 +86,8 @@
             </div>
         {/each}
         <div class="flex items-center">
-            <p class="text-blue-300 whitespace-nowrap">~</p>
-            <MaterialSymbolsArrowForwardIosRounded class="size-4 {lastOutput.isError ? "text-red-300" : "text-green-300"} mr-1" />
+            <p class="text-blue-400 whitespace-nowrap">~</p>
+            <MaterialSymbolsArrowForwardIosRounded class="size-4 {lastOutput.isError ? "text-red-400" : "text-green-400"} mr-1" />
             <input type="text" bind:value={input} onkeydown={(e) => e.key === "Enter" && handleCommand()} class="w-full border-none focus:outline-none bg-transparent" />
         </div>
     </div>
