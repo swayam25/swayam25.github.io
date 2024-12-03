@@ -16,17 +16,23 @@
 
 body {
     font-family: "JetBrains Mono", monospace;
-    @apply scroll-smooth overflow-x-hidden;
-    @apply bg-slate-950 text-slate-100;
-    @apply text-base antialiased;
+    background-color: theme(colors.slate.950);
+    color: theme(colors.slate.100);
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 ::-webkit-scrollbar {
-    @apply w-2;
+    width: 0.5rem;
 }
 ::-webkit-scrollbar-track {
-    @apply bg-transparent;
+    background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-    @apply bg-slate-900;
+    background-color: theme(colors.slate.800);
+    border-radius: 0rem;
 }
