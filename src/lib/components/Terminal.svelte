@@ -18,22 +18,26 @@
     });
 
     function handleCommand() {
-        const [cmd, opt] = args;
-        const cmdObj = cmds[cmd];
+        const commands = input.split("&&").map(cmd => cmd.trim());
+        for (const command of commands) {
+            const [cmd, ...opts] = command.split(" ");
+            const cmdObj = cmds[cmd];
 
-        if (cmdObj) {
-            if (opt?.startsWith("-")) {
-                if (opt === "--help" || opt === "-h") {
-                    showCommandHelp(args, input);
+            if (cmdObj) {
+                const opt = opts.find(opt => opt.startsWith("-"));
+                if (opt) {
+                    if (opt === "--help" || opt === "-h") {
+                        showCommandHelp([cmd, ...opts], command);
+                    } else {
+                        const optObj = cmdObj.opts?.find((o) => o.opts.includes(opt));
+                        optObj ? optObj.func([cmd, ...opts], command) : output.update((prev) => [...prev, { inp: command, res: `Option not found: ${opt}.`, isError: true }]);
+                    }
                 } else {
-                    const optObj = cmdObj.opts?.find((o) => o.opts.includes(opt));
-                    optObj ? optObj.func(args, input) : output.update((prev) => [...prev, { inp: input, res: `Option not found: ${opt}.`, isError: true }]);
+                    cmdObj.func([cmd, ...opts], command);
                 }
             } else {
-                cmdObj.func(args, input);
+                output.update((prev) => [...prev, { inp: command, res: cmd ? `Command not found: ${cmd}. Type "help" for a list of commands.` : "", isError: !!cmd }]);
             }
-        } else {
-            output.update((prev) => [...prev, { inp: input, res: cmd ? `Command not found: ${cmd}. Type "help" for a list of commands.` : "", isError: !!cmd }]);
         }
         input = "";
     }
