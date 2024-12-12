@@ -36,8 +36,19 @@
     });
 </script>
 
-<div class="bg-slate-950 z-50 rounded-lg {className}">
-    <button class="bg-slate-800 hover:bg-opacity-80 transition-all flex space-x-1 justify-center items-center {sizeClass} rounded-lg" onclick={() => {href != "" ? goto(href) : null; event != null ? event() : null}} disabled={disabled}>
+<button
+    class="bg-slate-800 z-50 rounded-lg {sizeClass} {className} hover:brightness-90 duration-200 transition-all"
+    onclick={() => {
+        if (href != "") {
+            goto(href);
+        }
+        if (event != null) {
+            event();
+        }
+    }}
+    {disabled}
+>
+    <div class="flex items-center justify-center transition-all space-x-1">
         {@render children?.()}
-    </button>
-</div>
+    </div>
+</button>
