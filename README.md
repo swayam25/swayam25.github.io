@@ -16,12 +16,12 @@ My portfolio website
 
 2. Install dependencies
     ```sh
-    npm i
+    pnpm i
     ```
 
 3. Start the app
     ```sh
-    npm run dev -- --port 2500
+    pnpm dev -- --port 2500
     ```
 
 ## 🌐 Production
@@ -30,10 +30,10 @@ My portfolio website
 
 2. Build the app
     ```sh
-    npm run build
+    pnpm build
     ```
 
 3. Preview the app
     ```sh
-    npm run preview -- --port 2500
+    pnpm preview -- --port 2500
     ```
