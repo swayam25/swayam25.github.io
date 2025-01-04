@@ -18,32 +18,48 @@
     });
 
     function handleCommand() {
-        const commands = input.split("&&").map(cmd => cmd.trim());
+        const commands = input.split("&&").map((cmd) => cmd.trim());
         for (const command of commands) {
             const [cmd, ...opts] = command.split(" ");
             const cmdObj = cmds[cmd];
 
             if (cmdObj) {
-                const opt = opts.find(opt => opt.startsWith("-"));
+                const opt = opts.find((opt) => opt.startsWith("-"));
                 if (opt) {
                     if (opt === "--help" || opt === "-h") {
                         showCommandHelp([cmd, ...opts], command);
                     } else {
                         const optObj = cmdObj.opts?.find((o) => o.opts.includes(opt));
-                        optObj ? optObj.func([cmd, ...opts], command) : output.update((prev) => [...prev, { inp: command, res: `Option not found: ${opt}.`, isError: true }]);
+                        optObj
+                            ? optObj.func([cmd, ...opts], command)
+                            : output.update((prev) => [
+                                  ...prev,
+                                  { inp: command, res: `Option not found: ${opt}.`, isError: true }
+                              ]);
                     }
                 } else {
                     cmdObj.func([cmd, ...opts], command);
                 }
             } else {
-                output.update((prev) => [...prev, { inp: command, res: cmd ? `Command not found: ${cmd}. Type "help" for a list of commands.` : "", isError: !!cmd }]);
+                output.update((prev) => [
+                    ...prev,
+                    {
+                        inp: command,
+                        res: cmd
+                            ? `Command not found: ${cmd}. Type "help" for a list of commands.`
+                            : "",
+                        isError: !!cmd
+                    }
+                ]);
             }
         }
         input = "";
     }
 
     onMount(() => {
-        output.set([{ inp: "", res: "Welcome to the terminal. Type \"help\" for a list of commands." }]);
+        output.set([
+            { inp: "", res: 'Welcome to the terminal. Type "help" for a list of commands.' }
+        ]);
         document.onclick = () => {
             const input = document.querySelector("input");
             input && input.focus();
@@ -51,34 +67,53 @@
     });
 </script>
 
-
-<div in:fade class="rounded-lg shadow-lg flex flex-col overflow-hidden h-screen">
-    <div class="flex items-center sticky top-0 py-5 bg-slate-950">
-        <div class="text-center flex-1 text-md text-slate-400">Terminal</div>
+<div in:fade class="flex h-screen flex-col overflow-hidden rounded-lg shadow-lg">
+    <div class="sticky top-0 flex items-center bg-slate-950 py-5">
+        <div class="text-md flex-1 text-center text-slate-400">Terminal</div>
         <div class="group flex space-x-2 p-2">
-            <button class="size-3 bg-red-400 group-hover:scale-110 transition-transform rounded-full cursor-default" onclick={() => defaultMode = true} aria-label="Exit terminal">
-                <span class="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <button
+                class="size-3 cursor-default rounded-full bg-red-400 transition-transform group-hover:scale-110"
+                onclick={() => (defaultMode = true)}
+                aria-label="Exit terminal"
+            >
+                <span
+                    class="flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100"
+                >
                     <MaterialSymbolsCloseSmallRounded class="block size-fit text-slate-950" />
                 </span>
             </button>
-            <button class="size-3 bg-yellow-400 group-hover:scale-110 transition-transform rounded-full cursor-default" onclick={() => defaultMode = true} aria-label="Exit terminal">
-                <span class="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <button
+                class="size-3 cursor-default rounded-full bg-yellow-400 transition-transform group-hover:scale-110"
+                onclick={() => (defaultMode = true)}
+                aria-label="Exit terminal"
+            >
+                <span
+                    class="flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100"
+                >
                     <MaterialSymbolsHorizontalRuleRounded class="block size-fit text-slate-950" />
                 </span>
             </button>
-            <button class="size-3 bg-green-400 group-hover:scale-110 transition-transform rounded-full cursor-default" onclick={() => defaultMode = true} aria-label="Exit terminal">
-                <span class="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <button
+                class="size-3 cursor-default rounded-full bg-green-400 transition-transform group-hover:scale-110"
+                onclick={() => (defaultMode = true)}
+                aria-label="Exit terminal"
+            >
+                <span
+                    class="flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100"
+                >
                     <MaterialSymbolsCloseFullscreenRounded class="block size-fit text-slate-950" />
                 </span>
             </button>
         </div>
     </div>
-    <div class="whitespace-pre-wrap overflow-y-scroll overflow-hidden text-sm">
+    <div class="overflow-hidden overflow-y-scroll whitespace-pre-wrap text-sm">
         {#each $output as { inp, res, isError, restrict }, i}
             <div transition:fade={{ duration: 100 }} class="flex flex-col">
                 {#if inp}
-                    <span class="flex space-x-1 items-center">
-                        <MaterialSymbolsArrowForwardIosRounded class="block size-4 text-slate-400" />
+                    <span class="flex items-center space-x-1">
+                        <MaterialSymbolsArrowForwardIosRounded
+                            class="block size-4 text-slate-400"
+                        />
                         <p class="max-w-fit">{inp}</p>
                     </span>
                 {/if}
@@ -90,11 +125,16 @@
             </div>
         {/each}
         <div class="flex items-center">
-            <p class="text-blue-400 whitespace-nowrap">~</p>
-            <MaterialSymbolsArrowForwardIosRounded class="size-4 {lastOutput.isError ? "text-red-400" : "text-green-400"} mr-1" />
-            <input type="text" bind:value={input} onkeydown={(e) => e.key === "Enter" && handleCommand()} class="w-full border-none focus:outline-none bg-transparent" />
+            <p class="whitespace-nowrap text-blue-400">~</p>
+            <MaterialSymbolsArrowForwardIosRounded
+                class="size-4 {lastOutput.isError ? 'text-red-400' : 'text-green-400'} mr-1"
+            />
+            <input
+                type="text"
+                bind:value={input}
+                onkeydown={(e) => e.key === "Enter" && handleCommand()}
+                class="w-full border-none bg-transparent focus:outline-none"
+            />
         </div>
     </div>
 </div>
-
-

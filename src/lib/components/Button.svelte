@@ -1,7 +1,6 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
 
-
     interface Props {
         class?: string;
         size?: "sm" | "md" | "lg" | "xl";
@@ -37,7 +36,7 @@
 </script>
 
 <button
-    class="bg-slate-800 z-50 rounded-lg {sizeClass} {className} hover:brightness-90 duration-200 transition-all"
+    class="z-50 rounded-lg bg-slate-800 {sizeClass} {className} transition-all duration-200 hover:brightness-90"
     onclick={() => {
         if (href != "") {
             goto(href);
@@ -48,7 +47,7 @@
     }}
     {disabled}
 >
-    <div class="flex items-center justify-center transition-all space-x-1">
+    <div class="flex items-center justify-center space-x-1 transition-all">
         {@render children?.()}
     </div>
 </button>

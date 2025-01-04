@@ -6,7 +6,7 @@ interface Social {
     [key: string]: {
         url: string;
         icon: any;
-    }
+    };
 }
 
 const socials: Social = {
@@ -22,6 +22,6 @@ const socials: Social = {
         url: "https://open.spotify.com/user/31lozcjyk355j54nho6m5k5aulvm",
         icon: RiSpotifyFill
     }
-}
+};
 
 export default socials;

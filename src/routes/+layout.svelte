@@ -2,22 +2,22 @@
     import "../app.css";
     import { onNavigate } from "$app/navigation";
 
-	interface Props {
-		children?: import("svelte").Snippet;
-	}
+    interface Props {
+        children?: import("svelte").Snippet;
+    }
 
-	let { children }: Props = $props();
+    let { children }: Props = $props();
 
     onNavigate((navigation) => {
-		if(!document.startViewTransition) return;
+        if (!document.startViewTransition) return;
 
-		return new Promise((resolve) => {
-			document.startViewTransition(async() => {
-				resolve();
-				await navigation.complete;
-			});
-		});
-	});
+        return new Promise((resolve) => {
+            document.startViewTransition(async () => {
+                resolve();
+                await navigation.complete;
+            });
+        });
+    });
 </script>
 
 {@render children?.()}

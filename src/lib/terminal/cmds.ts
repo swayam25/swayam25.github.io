@@ -3,7 +3,9 @@ import socials from "$lib/data/socials";
 import projects from "$lib/data/projects";
 import { showHelp } from "$lib/terminal/help";
 
-export const output: Writable<{ inp: string, res: string; isError?: boolean, restrict?: boolean }[]> = writable([]);
+export const output: Writable<
+    { inp: string; res: string; isError?: boolean; restrict?: boolean }[]
+> = writable([]);
 let defaultModeSetter: (value: boolean) => void;
 
 interface Cmds {
@@ -40,19 +42,27 @@ export const cmds: Cmds = {
     about: {
         help: "About me",
         func: (args, input) => {
-            output.update((prev) => [...prev, {
-                inp: input,
-                res: `Hi, I'm <span class="text-cyan-400">Swayam</span>, a full stack developer. I have a passion for creating elegant and efficient code that delivers exceptional user experiences.`
-            }]);
+            output.update((prev) => [
+                ...prev,
+                {
+                    inp: input,
+                    res: `Hi, I'm <span class="text-cyan-400">Swayam</span>, a full stack developer. I have a passion for creating elegant and efficient code that delivers exceptional user experiences.`
+                }
+            ]);
         }
     },
     socials: {
         help: "List all socials",
         func: (args, input) => {
-            output.update((prev) => [...prev, {
-                inp: input,
-                res: `I'm on ${Object.keys(socials).map((social) => makeHyperlink(social, socials[social].url)).join(", ")}.`
-            }]);
+            output.update((prev) => [
+                ...prev,
+                {
+                    inp: input,
+                    res: `I'm on ${Object.keys(socials)
+                        .map((social) => makeHyperlink(social, socials[social].url))
+                        .join(", ")}.`
+                }
+            ]);
         },
         opts: [
             {
@@ -60,17 +70,36 @@ export const cmds: Cmds = {
                 help: "Opens socials/projects",
                 func: (args, input) => {
                     const social: string = args.slice(2).join(" ");
-                    const socialName: string | undefined = Object.keys(socials).find((s) => s === social || s.toLowerCase() === social);
+                    const socialName: string | undefined = Object.keys(socials).find(
+                        (s) => s === social || s.toLowerCase() === social
+                    );
                     if (socialName) {
-                        output.update((prev) => [...prev, {
-                            inp: input,
-                            res: `Opening ${makeHyperlink(social, socials[socialName].url)}...`
-                        }]);
+                        output.update((prev) => [
+                            ...prev,
+                            {
+                                inp: input,
+                                res: `Opening ${makeHyperlink(social, socials[socialName].url)}...`
+                            }
+                        ]);
                         window.open(socials[socialName].url, "_blank");
                     } else if (social === "") {
-                        output.update((prev) => [...prev, { inp: input, res: `No social provided. Type "socials" for a list of socials.`, isError: true }]);
+                        output.update((prev) => [
+                            ...prev,
+                            {
+                                inp: input,
+                                res: `No social provided. Type "socials" for a list of socials.`,
+                                isError: true
+                            }
+                        ]);
                     } else {
-                        output.update((prev) => [...prev, { inp: input, res: `Social not found: ${social}. Type "socials" for a list of socials.`, isError: true }]);
+                        output.update((prev) => [
+                            ...prev,
+                            {
+                                inp: input,
+                                res: `Social not found: ${social}. Type "socials" for a list of socials.`,
+                                isError: true
+                            }
+                        ]);
                     }
                 }
             }
@@ -79,10 +108,18 @@ export const cmds: Cmds = {
     projects: {
         help: "List all projects",
         func: (args, input) => {
-            output.update((prev) => [...prev, {
-                inp: input,
-                res: Object.keys(projects).map((project) => `${makeHyperlink(project, projects[project].url)}<br>  ${projects[project].desc}`).join("<br>")
-            }]);
+            output.update((prev) => [
+                ...prev,
+                {
+                    inp: input,
+                    res: Object.keys(projects)
+                        .map(
+                            (project) =>
+                                `${makeHyperlink(project, projects[project].url)}<br>  ${projects[project].desc}`
+                        )
+                        .join("<br>")
+                }
+            ]);
         },
         opts: [
             {
@@ -90,17 +127,36 @@ export const cmds: Cmds = {
                 help: "Opens socials/projects",
                 func: (args, input) => {
                     const project: any = args.slice(2).join(" ");
-                    const projectName = Object.keys(projects).find((p) => p === project || p.toLowerCase() === project);
+                    const projectName = Object.keys(projects).find(
+                        (p) => p === project || p.toLowerCase() === project
+                    );
                     if (projectName) {
-                        output.update((prev) => [...prev, {
-                            inp: input,
-                            res: `Opening ${makeHyperlink(projectName, projects[projectName].url)}...`
-                        }]);
+                        output.update((prev) => [
+                            ...prev,
+                            {
+                                inp: input,
+                                res: `Opening ${makeHyperlink(projectName, projects[projectName].url)}...`
+                            }
+                        ]);
                         window.open(projects[projectName].url, "_blank");
                     } else if (project === "") {
-                        output.update((prev) => [...prev, { inp: input, res: `No project provided. Type "projects" for a list of projects.`, isError: true }]);
+                        output.update((prev) => [
+                            ...prev,
+                            {
+                                inp: input,
+                                res: `No project provided. Type "projects" for a list of projects.`,
+                                isError: true
+                            }
+                        ]);
                     } else {
-                        output.update((prev) => [...prev, { inp: input, res: `Project not found: ${project}. Type "projects" for a list of projects.`, isError: true }]);
+                        output.update((prev) => [
+                            ...prev,
+                            {
+                                inp: input,
+                                res: `Project not found: ${project}. Type "projects" for a list of projects.`,
+                                isError: true
+                            }
+                        ]);
                     }
                 }
             }
@@ -109,11 +165,14 @@ export const cmds: Cmds = {
     echo: {
         help: "Prints the given text",
         func: (args, input) => {
-            output.update((prev) => [...prev, {
-                inp: input,
-                res: args.slice(1).join(" "),
-                restrict: true
-            }]);
+            output.update((prev) => [
+                ...prev,
+                {
+                    inp: input,
+                    res: args.slice(1).join(" "),
+                    restrict: true
+                }
+            ]);
         }
     },
     cowsay: {
@@ -132,11 +191,14 @@ export const cmds: Cmds = {
                 `                 ||     ||`
             ];
             const cow = cowParts.join("\n");
-            output.update((prev) => [...prev, {
-                inp: input,
-                res: `${cow}`,
-                restrict: true
-            }]);
+            output.update((prev) => [
+                ...prev,
+                {
+                    inp: input,
+                    res: `${cow}`,
+                    restrict: true
+                }
+            ]);
         }
     }
 };

@@ -8,12 +8,12 @@
     <title>Swayam | {$page.error?.message}</title>
 </svelte:head>
 
-<div class="h-screen w-screen flex flex-col space-y-1 justify-center items-center">
-    <h1 class="text-4xl md:text-5xl font-bold">{$page.status}</h1>
-    <h2 class="text-xl text-slate-400 font-semibold">{$page.error?.message}</h2>
+<div class="flex h-screen w-screen flex-col items-center justify-center space-y-1">
+    <h1 class="text-4xl font-bold md:text-5xl">{$page.status}</h1>
+    <h2 class="text-xl font-semibold text-slate-400">{$page.error?.message}</h2>
     <div class="pt-5">
         <Button size="md" href="/" class="group">
-            <PhCaretLeftBold class="size-4 group-hover:-translate-x-2 transition-transform" />
+            <PhCaretLeftBold class="size-4 transition-transform group-hover:-translate-x-2" />
             <span>Homepage</span>
         </Button>
     </div>
