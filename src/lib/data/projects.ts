@@ -9,6 +9,13 @@ interface Project {
 }
 
 const projects: Project = {
+    "Clash With JPA": {
+        desc: "FWA experts in War-Farming, offering diverse clans and simultaneous 50v50 FWA wars and CWL action. Join one of the clans in our family today!",
+        url: "https://clashwithjpa.com",
+        img: "/project/clashwithjpa.webp",
+        time: 2024,
+        tags: ["Clash of Clans", "FWA", "Clan War"]
+    },
     Rythmify: {
         desc: "Introducing Rythmify, your go-to web music player that's designed to amplify your moments.",
         img: "/project/rythmify.webp",
