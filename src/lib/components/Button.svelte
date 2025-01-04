@@ -1,21 +1,19 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
+    import type { Snippet } from "svelte";
 
     interface Props {
         class?: string;
-        size?: "sm" | "md" | "lg" | "xl";
+        size?: "sm" | "md" | "lg" | "xl" | "";
         href?: string;
-        event?: () => void;
-        disabled?: boolean;
-        children?: import("svelte").Snippet;
+        onclick?: () => void;
+        children?: Snippet;
     }
 
     let {
         class: className = "",
-        size = "md",
+        size = "",
         href = "",
-        event = () => {},
-        disabled = false,
+        onclick = () => {},
         children
     }: Props = $props();
 
@@ -35,19 +33,16 @@
     });
 </script>
 
-<button
+<svelte:element
+    this={href ? "a" : "button"}
+    role={href ? "link" : "button"}
+    tabindex="0"
     class="z-50 rounded-lg bg-slate-800 {sizeClass} {className} transition-all duration-200 hover:brightness-90"
-    onclick={() => {
-        if (href != "") {
-            goto(href);
-        }
-        if (event != null) {
-            event();
-        }
-    }}
-    {disabled}
+    {onclick}
+    {href}
+    data-sveltekit-preload-data="hover"
 >
     <div class="flex items-center justify-center space-x-1 transition-all">
         {@render children?.()}
     </div>
-</button>
+</svelte:element>

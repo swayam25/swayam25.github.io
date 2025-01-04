@@ -27,7 +27,7 @@
     <Button
         size="md"
         class="fixed bottom-0 right-0 m-5"
-        event={() => {
+        onclick={() => {
             defaultMode = !defaultMode;
         }}
     >
