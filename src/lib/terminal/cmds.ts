@@ -1,7 +1,7 @@
-import { writable, type Writable } from "svelte/store";
-import socials from "$lib/data/socials";
 import projects from "$lib/data/projects";
+import socials from "$lib/data/socials";
 import { showHelp } from "$lib/terminal/help";
+import { writable, type Writable } from "svelte/store";
 
 export const output: Writable<
     { inp: string; res: string; isError?: boolean; restrict?: boolean }[]

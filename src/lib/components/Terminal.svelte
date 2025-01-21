@@ -1,16 +1,15 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-    import { fade } from "svelte/transition";
     import { cmds, output, setDefaultModeSetter } from "$lib/terminal/cmds";
     import { showCommandHelp } from "$lib/terminal/help";
+    import { onMount } from "svelte";
+    import { fade } from "svelte/transition";
     import MaterialSymbolsArrowForwardIosRounded from "~icons/material-symbols/arrow-forward-ios-rounded";
+    import MaterialSymbolsCloseFullscreenRounded from "~icons/material-symbols/close-fullscreen-rounded";
     import MaterialSymbolsCloseSmallRounded from "~icons/material-symbols/close-small-rounded";
     import MaterialSymbolsHorizontalRuleRounded from "~icons/material-symbols/horizontal-rule-rounded";
-    import MaterialSymbolsCloseFullscreenRounded from "~icons/material-symbols/close-fullscreen-rounded";
 
     let { defaultMode = $bindable() }: { defaultMode: boolean } = $props();
     let input: string = $state("");
-    let args: string[] = $derived.by(() => input.split(" "));
     let lastOutput = $derived.by(() => $output[$output.length - 1] || { isError: false });
 
     setDefaultModeSetter((value: boolean) => {

@@ -1,19 +1,19 @@
 <script lang="ts">
-    import { fade } from "svelte/transition";
-    import Terminal from "$lib/components/Terminal.svelte";
     import Button from "$lib/components/Button.svelte";
-    import socials from "$lib/data/socials";
-    import projects from "$lib/data/projects";
     import InlineLink from "$lib/components/InlineLink.svelte";
-    import PhArrowUpRightBold from "~icons/ph/arrow-up-right-bold";
+    import Terminal from "$lib/components/Terminal.svelte";
+    import projects from "$lib/data/projects";
+    import socials from "$lib/data/socials";
+    import { fade } from "svelte/transition";
     import PhArrowRightBold from "~icons/ph/arrow-right-bold";
+    import PhArrowUpRightBold from "~icons/ph/arrow-up-right-bold";
     import RiDiscordFill from "~icons/ri/discord-fill";
-    import SimpleIconsPython from "~icons/simple-icons/python";
     import SimpleIconsFastapi from "~icons/simple-icons/fastapi";
+    import SimpleIconsPython from "~icons/simple-icons/python";
     import SimpleIconsSvelte from "~icons/simple-icons/svelte";
     import SimpleIconsTailwindcss from "~icons/simple-icons/tailwindcss";
-    import SolarWidgetOutline from "~icons/solar/widget-outline";
     import SolarProgrammingOutline from "~icons/solar/programming-outline";
+    import SolarWidgetOutline from "~icons/solar/widget-outline";
 
     let defaultMode: boolean = true;
 </script>
