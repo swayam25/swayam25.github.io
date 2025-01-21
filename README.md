@@ -21,7 +21,7 @@ My portfolio website
 
 3. Start the app
     ```sh
-    pnpm dev -- --port 2500
+    pnpm run dev -- --port 2500
     ```
 
 ## 🌐 Production
@@ -30,10 +30,10 @@ My portfolio website
 
 2. Build the app
     ```sh
-    pnpm build
+    pnpm run build
     ```
 
 3. Preview the app
     ```sh
-    pnpm preview -- --port 2500
+    pnpm run preview -- --port 2500
     ```
