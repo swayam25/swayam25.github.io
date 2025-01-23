@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @font-face {
     font-family: "JetBrains Mono Variable";
@@ -16,12 +14,12 @@
 
 body {
     font-family: "JetBrains Mono", monospace;
-    background-color: theme(colors.slate.950);
-    color: theme(colors.slate.100);
+    background-color: var(--color-slate-950);
+    color: var(--color-slate-100);
     scroll-behavior: smooth;
     overflow-x: hidden;
-    font-size: 1rem;
-    line-height: 1.5rem;
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -33,6 +31,6 @@ body {
     background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-    background-color: theme(colors.slate.800);
-    border-radius: 0rem;
+    background-color: var(--color-slate-800);
+    border-radius: 0px;
 }

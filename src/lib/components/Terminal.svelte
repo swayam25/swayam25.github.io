@@ -105,7 +105,7 @@
             </button>
         </div>
     </div>
-    <div class="overflow-hidden overflow-y-scroll whitespace-pre-wrap text-sm">
+    <div class="overflow-hidden overflow-y-scroll text-sm whitespace-pre-wrap">
         {#each $output as { inp, res, isError, restrict }, i}
             <div transition:fade={{ duration: 100 }} class="flex flex-col">
                 {#if inp}
@@ -132,7 +132,7 @@
                 type="text"
                 bind:value={input}
                 onkeydown={(e) => e.key === "Enter" && handleCommand()}
-                class="w-full border-none bg-transparent focus:outline-none"
+                class="w-full border-none bg-transparent focus:outline-hidden"
             />
         </div>
     </div>

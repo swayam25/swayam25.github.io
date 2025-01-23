@@ -22,11 +22,11 @@
     <title>Swayam</title>
 </svelte:head>
 
-<div class="m-auto block min-h-screen px-5 lg:max-w-screen-xl">
+<div class="m-auto px-5 container">
     <!-- Toggle button -->
     <Button
         size="md"
-        class="fixed bottom-0 right-0 m-5"
+        class="fixed right-0 bottom-0 m-5"
         onclick={() => {
             defaultMode = !defaultMode;
         }}
@@ -119,7 +119,7 @@
                             <a
                                 href={data.url}
                                 target="_blank"
-                                class="group/item rounded-lg p-2 transition-all duration-200 hover:bg-slate-800 hover:!opacity-100 group-hover:opacity-50"
+                                class="group/item rounded-lg p-2 transition-all duration-200 group-hover:opacity-50 hover:bg-slate-800 hover:opacity-100!"
                             >
                                 <div
                                     class="flex flex-col items-center justify-start gap-y-4 md:flex-row md:items-start md:gap-x-4 md:gap-y-0"
@@ -166,7 +166,7 @@
                     >
                         <span>Get more projects here</span>
                         <PhArrowRightBold
-                            class="size-4 transition-transform group-hover:translate-x-2"
+                            class="inline-block size-4 transition-transform group-hover:translate-x-2"
                         />
                     </InlineLink>
                 </footer>
