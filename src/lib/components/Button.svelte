@@ -37,12 +37,10 @@
     this={href ? "a" : "button"}
     role={href ? "link" : "button"}
     tabindex="0"
-    class="z-50 rounded-lg bg-slate-800 {sizeClass} {className} transition-all duration-200 hover:brightness-90"
+    class="z-50 flex items-center justify-center gap-2 rounded-lg bg-slate-800 {sizeClass} {className} transition-all duration-200 hover:brightness-90"
     {onclick}
     {href}
     data-sveltekit-preload-data="hover"
 >
-    <div class="flex items-center justify-center space-x-1 transition-all">
-        {@render children?.()}
-    </div>
+    {@render children?.()}
 </svelte:element>

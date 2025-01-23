@@ -1,11 +1,12 @@
 <script lang="ts">
     import { cmds, output, setDefaultModeSetter } from "$lib/terminal/cmds";
     import { showCommandHelp } from "$lib/terminal/help";
-    import { onMount } from "svelte";
+    import { onMount, type SvelteComponent } from "svelte";
+    import type { SvelteHTMLElements } from "svelte/elements";
     import { fade } from "svelte/transition";
     import MaterialSymbolsArrowForwardIosRounded from "~icons/material-symbols/arrow-forward-ios-rounded";
-    import MaterialSymbolsCloseFullscreenRounded from "~icons/material-symbols/close-fullscreen-rounded";
-    import MaterialSymbolsCloseSmallRounded from "~icons/material-symbols/close-small-rounded";
+    import MaterialSymbolsChromeRestoreOutlineRounded from "~icons/material-symbols/chrome-restore-outline-rounded";
+    import MaterialSymbolsCloseRounded from "~icons/material-symbols/close-rounded";
     import MaterialSymbolsHorizontalRuleRounded from "~icons/material-symbols/horizontal-rule-rounded";
 
     let { defaultMode = $bindable() }: { defaultMode: boolean } = $props();
@@ -64,52 +65,33 @@
             input && input.focus();
         };
     });
+
+    const windowIcons: [typeof SvelteComponent<SvelteHTMLElements["svg"]>, string][] = [
+        [MaterialSymbolsHorizontalRuleRounded, "mt-1.5"],
+        [MaterialSymbolsChromeRestoreOutlineRounded, "rotate-180"],
+        [MaterialSymbolsCloseRounded, ""]
+    ];
 </script>
 
 <div in:fade class="flex h-screen flex-col overflow-hidden rounded-lg shadow-lg">
     <div class="sticky top-0 flex items-center bg-slate-950 py-5">
         <div class="text-md flex-1 text-center text-slate-400">Terminal</div>
-        <div class="group flex space-x-2 p-2">
-            <button
-                class="size-3 cursor-default rounded-full bg-red-400 transition-transform group-hover:scale-110"
-                onclick={() => (defaultMode = true)}
-                aria-label="Exit terminal"
-            >
-                <span
-                    class="flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100"
+        <div class="fixed right-0 flex gap-2 p-2 text-slate-200">
+            {#each windowIcons as [Icon, cls]}
+                <button
+                    class="flex size-6 cursor-default items-center justify-center overflow-hidden rounded-full bg-slate-800 p-1 transition-all duration-200 group-hover:scale-110 hover:bg-slate-800/80"
+                    onclick={() => (defaultMode = true)}
                 >
-                    <MaterialSymbolsCloseSmallRounded class="block size-fit text-slate-950" />
-                </span>
-            </button>
-            <button
-                class="size-3 cursor-default rounded-full bg-yellow-400 transition-transform group-hover:scale-110"
-                onclick={() => (defaultMode = true)}
-                aria-label="Exit terminal"
-            >
-                <span
-                    class="flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100"
-                >
-                    <MaterialSymbolsHorizontalRuleRounded class="block size-fit text-slate-950" />
-                </span>
-            </button>
-            <button
-                class="size-3 cursor-default rounded-full bg-green-400 transition-transform group-hover:scale-110"
-                onclick={() => (defaultMode = true)}
-                aria-label="Exit terminal"
-            >
-                <span
-                    class="flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100"
-                >
-                    <MaterialSymbolsCloseFullscreenRounded class="block size-fit text-slate-950" />
-                </span>
-            </button>
+                    <Icon class={cls} />
+                </button>
+            {/each}
         </div>
     </div>
     <div class="overflow-hidden overflow-y-scroll text-sm whitespace-pre-wrap">
         {#each $output as { inp, res, isError, restrict }, i}
             <div transition:fade={{ duration: 100 }} class="flex flex-col">
                 {#if inp}
-                    <span class="flex items-center space-x-1">
+                    <span class="flex items-center gap-1">
                         <MaterialSymbolsArrowForwardIosRounded
                             class="block size-4 text-slate-400"
                         />

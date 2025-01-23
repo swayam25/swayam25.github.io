@@ -4,7 +4,8 @@
     import Terminal from "$lib/components/Terminal.svelte";
     import projects from "$lib/data/projects";
     import socials from "$lib/data/socials";
-    import { fade } from "svelte/transition";
+    import { expoOut } from "svelte/easing";
+    import { fade, fly } from "svelte/transition";
     import PhArrowRightBold from "~icons/ph/arrow-right-bold";
     import PhArrowUpRightBold from "~icons/ph/arrow-up-right-bold";
     import RiDiscordFill from "~icons/ri/discord-fill";
@@ -15,14 +16,14 @@
     import SolarProgrammingOutline from "~icons/solar/programming-outline";
     import SolarWidgetOutline from "~icons/solar/widget-outline";
 
-    let defaultMode: boolean = true;
+    let defaultMode: boolean = $state(true);
 </script>
 
 <svelte:head>
     <title>Swayam</title>
 </svelte:head>
 
-<div class="m-auto px-5 container">
+<div class="container m-auto px-5">
     <!-- Toggle button -->
     <Button
         size="md"
@@ -32,11 +33,21 @@
         }}
     >
         {#if defaultMode}
-            <SolarProgrammingOutline class="size-fit" />
-            <span>Terminal</span>
+            <span
+                in:fly={{ y: -25, easing: expoOut }}
+                class="flex size-full items-center justify-center gap-2"
+            >
+                <SolarProgrammingOutline class="size-fit" />
+                <span>Terminal</span>
+            </span>
         {:else}
-            <SolarWidgetOutline class="size-fit" />
-            <span>Default</span>
+            <span
+                in:fly={{ y: 25, easing: expoOut }}
+                class="flex size-full items-center justify-center gap-2"
+            >
+                <SolarWidgetOutline class="size-fit" />
+                <span>Default</span>
+            </span>
         {/if}
     </Button>
     {#if defaultMode}
