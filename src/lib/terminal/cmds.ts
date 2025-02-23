@@ -6,7 +6,7 @@ import { writable, type Writable } from "svelte/store";
 export const output: Writable<
     { inp: string; res: string; isError?: boolean; restrict?: boolean }[]
 > = writable([]);
-let defaultModeSetter: (value: boolean) => void;
+export let defaultModeSetter: (value: boolean) => void;
 
 interface Cmds {
     [key: string]: {

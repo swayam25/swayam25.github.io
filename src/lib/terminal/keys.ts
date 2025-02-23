@@ -1,5 +1,5 @@
 import type { Writable } from "svelte/store";
-import { cmds } from "./cmds";
+import { cmds, defaultModeSetter } from "./cmds";
 
 let inp: (inp: string) => void;
 
@@ -52,6 +52,12 @@ export function handleKeys(
             if (e.ctrlKey) {
                 e.preventDefault();
                 outputs.set([]);
+            }
+            break;
+        case "d":
+            if (e.ctrlKey) {
+                e.preventDefault();
+                defaultModeSetter(true);
             }
             break;
         default:
