@@ -23,7 +23,7 @@
     <title>Swayam</title>
 </svelte:head>
 
-<div class="container m-auto px-5">
+<div class="container m-auto">
     <!-- Toggle button -->
     <Button
         size="md"
@@ -54,7 +54,7 @@
         <!-- Main Page -->
         <div
             in:fade
-            class="py-5 pt-10 transition-all lg:flex lg:items-start lg:justify-between lg:py-0 lg:pt-0"
+            class="p-5 pt-10 transition-all lg:flex lg:items-start lg:justify-between lg:py-0 lg:pt-0"
         >
             <!-- Sidebar -->
             <header
@@ -145,7 +145,7 @@
                                             <div class="flex items-center justify-start gap-x-1">
                                                 <h2 class="text-lg font-semibold">{name}</h2>
                                                 <PhArrowUpRightBold
-                                                    class="size-4 transition-transform group-hover/item:-translate-y-0.5 group-hover/item:translate-x-2"
+                                                    class="size-4 transition-transform group-hover/item:translate-x-2 group-hover/item:-translate-y-0.5"
                                                 />
                                             </div>
                                             <p class="text-sm font-semibold text-slate-400">

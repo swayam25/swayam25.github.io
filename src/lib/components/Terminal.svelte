@@ -1,6 +1,7 @@
 <script lang="ts">
     import { cmds, output, setDefaultModeSetter } from "$lib/terminal/cmds";
     import { showCommandHelp } from "$lib/terminal/help";
+    import { handleKeys, setInput } from "$lib/terminal/keys";
     import { onMount, type SvelteComponent } from "svelte";
     import type { SvelteHTMLElements } from "svelte/elements";
     import { fade } from "svelte/transition";
@@ -16,10 +17,14 @@
     setDefaultModeSetter((value: boolean) => {
         defaultMode = value;
     });
+    setInput((value: string) => {
+        input = value;
+    });
 
     function handleCommand() {
         const commands = input.split("&&").map((cmd) => cmd.trim());
         for (const command of commands) {
+            if (!command) continue;
             const [cmd, ...opts] = command.split(" ");
             const cmdObj = cmds[cmd];
 
@@ -45,9 +50,7 @@
                     ...prev,
                     {
                         inp: command,
-                        res: cmd
-                            ? `Command not found: ${cmd}. Type "help" for a list of commands.`
-                            : "",
+                        res: `Command not found: ${cmd}. Type "help" for a list of commands.`,
                         isError: !!cmd
                     }
                 ]);
@@ -60,7 +63,7 @@
         output.set([
             { inp: "", res: 'Welcome to the terminal. Type "help" for a list of commands.' }
         ]);
-        document.onclick = () => {
+        document.onclick = document.onkeydown = () => {
             const input = document.querySelector("input");
             input && input.focus();
         };
@@ -73,8 +76,8 @@
     ];
 </script>
 
-<div in:fade class="flex h-screen flex-col overflow-hidden rounded-lg shadow-lg">
-    <div class="sticky top-0 flex items-center bg-slate-950 py-5">
+<div in:fade class="flex h-screen flex-col overflow-hidden">
+    <div class="sticky top-0 flex items-center py-5">
         <div class="text-md flex-1 text-center text-slate-400">Terminal</div>
         <div class="fixed right-0 flex gap-2 p-2 text-slate-200">
             {#each windowIcons as [Icon, cls]}
@@ -87,7 +90,7 @@
             {/each}
         </div>
     </div>
-    <div class="overflow-hidden overflow-y-scroll text-sm whitespace-pre-wrap">
+    <div class="overflow-hidden overflow-y-scroll px-5 text-sm whitespace-pre-wrap">
         {#each $output as { inp, res, isError, restrict }, i}
             <div transition:fade={{ duration: 100 }} class="flex flex-col">
                 {#if inp}
@@ -112,8 +115,15 @@
             />
             <input
                 type="text"
+                id="terminal-input"
                 bind:value={input}
-                onkeydown={(e) => e.key === "Enter" && handleCommand()}
+                onkeydown={(e) => {
+                    (e.key === "Enter" && handleCommand()) || handleKeys(e, input, output);
+                    setTimeout(() => {
+                        const terminalInput = document.getElementById("terminal-input");
+                        terminalInput?.scrollIntoView({ behavior: "smooth", block: "end" });
+                    });
+                }}
                 class="w-full border-none bg-transparent focus:outline-hidden"
             />
         </div>
