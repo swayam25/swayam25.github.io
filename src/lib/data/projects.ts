@@ -9,6 +9,13 @@ interface Project {
 }
 
 const projects: Project = {
+    Aero: {
+        desc: "Aero makes listening to music feel light and breezy.",
+        url: "https://github.com/swayam25/Aero",
+        img: "/project/aero.webp",
+        time: 2025,
+        tags: ["Music Player", "Discord OAuth", "SvelteKit"]
+    },
     "Clash With JPA": {
         desc: "FWA experts in War-Farming, offering diverse clans and simultaneous 50v50 FWA wars and CWL action. Join one of the clans in our family today!",
         url: "https://clashwithjpa.com",
