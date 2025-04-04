@@ -1,11 +1,12 @@
-import RiGithubFill from "~icons/ri/github-fill";
+import type { Component } from "svelte";
 import RiDiscordFill from "~icons/ri/discord-fill";
+import RiGithubFill from "~icons/ri/github-fill";
 import RiSpotifyFill from "~icons/ri/spotify-fill";
 
 interface Social {
     [key: string]: {
         url: string;
-        icon: any;
+        icon: Component;
     };
 }
 
