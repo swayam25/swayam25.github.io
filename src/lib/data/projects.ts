@@ -48,7 +48,7 @@ const projects: Project = {
     },
 
     "Multi DL": {
-        desc: "A multimedia downloader which can download any video, music, playlist, album etc via url, keywords etc. Supports both YouTube and Spotify.",
+        desc: "A cli tool for downloading media from various platforms.",
         url: "https://github.com/swayam25/Multi-DL",
         img: "/project/multidl.webp",
         time: 2022,
