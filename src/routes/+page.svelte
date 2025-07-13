@@ -1,6 +1,7 @@
 <script lang="ts">
     import Button from "$lib/components/Button.svelte";
     import InlineLink from "$lib/components/InlineLink.svelte";
+    import Ring from "$lib/components/Ring.svelte";
     import Terminal from "$lib/components/Terminal.svelte";
     import projects from "$lib/data/projects";
     import socials from "$lib/data/socials";
@@ -8,8 +9,9 @@
     import { fade, fly } from "svelte/transition";
     import PhArrowRightBold from "~icons/ph/arrow-right-bold";
     import PhArrowUpRightBold from "~icons/ph/arrow-up-right-bold";
-    import RiDiscordFill from "~icons/ri/discord-fill";
+    import SimpleIconsDiscord from "~icons/simple-icons/discord";
     import SimpleIconsFastapi from "~icons/simple-icons/fastapi";
+    import SimpleIconsGo from "~icons/simple-icons/go";
     import SimpleIconsPython from "~icons/simple-icons/python";
     import SimpleIconsSvelte from "~icons/simple-icons/svelte";
     import SimpleIconsTailwindcss from "~icons/simple-icons/tailwindcss";
@@ -60,36 +62,46 @@
             <header
                 class="flex flex-col items-start justify-between transition-all lg:sticky lg:top-0 lg:h-screen lg:w-1/2 lg:py-24"
             >
-                <!-- Profile -->
-                <div class="flex flex-col items-start justify-start">
-                    <div class="flex items-center justify-start gap-x-2">
-                        <img
-                            src="https://github.com/swayam25.png"
-                            alt="Swayam Logo"
-                            class="size-20 rounded-lg object-cover"
-                        />
-                        <div class="flex flex-col items-start justify-center">
-                            <h1 class="text-4xl font-semibold lg:text-5xl">Swayam</h1>
-                            <p class="font-base text-lg text-slate-200">Full Stack Developer</p>
+                <div class="flex h-full flex-col items-start justify-between gap-4 lg:max-w-md">
+                    <div class="flex h-full flex-col items-start justify-start gap-4">
+                        <!-- Profile -->
+                        <div class="flex flex-col items-start justify-start">
+                            <div class="flex items-center justify-start gap-x-2">
+                                <img
+                                    src="https://github.com/swayam25.png"
+                                    alt="Swayam Logo"
+                                    class="size-20 rounded-lg object-cover"
+                                />
+                                <div class="flex flex-col items-start justify-center">
+                                    <h1 class="text-4xl font-semibold lg:text-5xl">Swayam</h1>
+                                    <p class="font-base text-lg">Student</p>
+                                </div>
+                            </div>
+                            <p class="mt-2 text-slate-400">
+                                Have a passion for creating elegant and efficient code that delivers
+                                exceptional user experiences.
+                            </p>
+                        </div>
+                        <!-- Socials -->
+                        <div class="mt-5 flex items-center justify-start gap-x-4">
+                            {#each Object.entries(socials) as [name, data]}
+                                <a
+                                    href={data.url}
+                                    target="_blank"
+                                    title={name}
+                                    class="text-slate-400 transition-colors duration-200 hover:text-slate-100"
+                                >
+                                    <data.icon class="size-8" />
+                                </a>
+                            {/each}
                         </div>
                     </div>
-                    <p class="mt-2 text-slate-400 lg:max-w-sm">
-                        Have a passion for creating elegant and efficient code that delivers
-                        exceptional user experiences.
-                    </p>
-                </div>
-                <!-- Socials -->
-                <div class="mt-5 flex items-center justify-start gap-x-4">
-                    {#each Object.entries(socials) as [name, data]}
-                        <a
-                            href={data.url}
-                            target="_blank"
-                            title={name}
-                            class="text-slate-400 transition-colors duration-200 hover:text-slate-100"
-                        >
-                            <data.icon class="size-8" />
-                        </a>
-                    {/each}
+                    <!-- Ring -->
+                    <div class="mt-5 flex w-full items-center justify-center">
+                        <div class="w-full sm:w-fit">
+                            <Ring />
+                        </div>
+                    </div>
                 </div>
             </header>
             <!-- Content -->
@@ -103,7 +115,7 @@
                             >Python</InlineLink
                         >, where I first created some <InlineLink
                             href="https://discord.com"
-                            icon={RiDiscordFill}>Discord Bots</InlineLink
+                            icon={SimpleIconsDiscord}>Discord Bots</InlineLink
                         >. As I got more into coding, I explored APIs using tools like <InlineLink
                             href="https://fastapi.tiangolo.com"
                             icon={SimpleIconsFastapi}>FastAPI</InlineLink
@@ -113,13 +125,15 @@
                             icon={SimpleIconsSvelte}>SvelteKit</InlineLink
                         > & <InlineLink href="https://tailwindcss.com" icon={SimpleIconsTailwindcss}
                             >TailwindCSS</InlineLink
-                        > opened up a whole new world for me. Now, I enjoy building full-stack applications.
-                        My coding journey is ongoing, and I love the challenges and growth it brings.
+                        > opened up a whole new world for me. As I delved deeper into backend, my curiosity
+                        led me to explore <InlineLink href="https://go.dev" icon={SimpleIconsGo}
+                            >Go</InlineLink
+                        >. Now, I enjoy building full-stack applications.
                         <br /><br />
-                        Coding, to me, is an artistic expression, a harmonious combination of logic and
-                        grace that shapes smooth user experiences. As my projects grew, so did my love
-                        for coding. Now, I eagerly anticipate the future, ready to make a lasting impact,
-                        one elegant line of code at a time.
+                        Now, I enjoy building full-stack applications. My coding journey is ongoing,
+                        and I love the challenges and growth it brings. Coding, to me, is an artistic
+                        expression, a harmonious combination of logic and grace that shapes smooth user
+                        experiences.
                     </p>
                 </section>
                 <!-- Projects -->
@@ -130,7 +144,7 @@
                             <a
                                 href={data.url}
                                 target="_blank"
-                                class="group/item rounded-lg p-2 transition-all duration-200 group-hover:opacity-50 hover:bg-slate-800 hover:opacity-100!"
+                                class="group/item rounded-lg p-2 transition-all duration-200 group-hover:opacity-50 hover:bg-slate-900 hover:opacity-100!"
                             >
                                 <div
                                     class="flex flex-col items-center justify-start gap-y-4 md:flex-row md:items-start md:gap-x-4 md:gap-y-0"
@@ -138,7 +152,7 @@
                                     <img
                                         src={data.img}
                                         alt={name}
-                                        class="rounded-lg border-2 border-slate-800 object-cover md:h-24 md:w-48"
+                                        class="rounded-lg border border-slate-900 object-cover md:h-24 md:w-48"
                                     />
                                     <div class="flex flex-col items-start justify-center">
                                         <div class="flex w-full items-center justify-between">

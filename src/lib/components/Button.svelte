@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { cn } from "$lib/utils/cn";
     import type { Snippet } from "svelte";
 
     interface Props {
@@ -37,7 +38,11 @@
     this={href ? "a" : "button"}
     role={href ? "link" : "button"}
     tabindex="0"
-    class="z-50 flex items-center justify-center gap-2 rounded-lg bg-slate-800 {sizeClass} {className} transition-all duration-200 hover:brightness-90"
+    class={cn(
+        "z-50 flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-slate-800 transition-all duration-200 hover:brightness-90",
+        sizeClass,
+        className
+    )}
     {onclick}
     {href}
     data-sveltekit-preload-data="hover"

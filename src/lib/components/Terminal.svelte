@@ -2,8 +2,8 @@
     import { cmds, output, setDefaultModeSetter } from "$lib/terminal/cmds";
     import { showCommandHelp } from "$lib/terminal/help";
     import { handleKeys, setInput } from "$lib/terminal/keys";
-    import { onMount, type SvelteComponent } from "svelte";
-    import type { SvelteHTMLElements } from "svelte/elements";
+    import type { Component } from "svelte";
+    import { onMount } from "svelte";
     import { fade } from "svelte/transition";
     import MaterialSymbolsArrowForwardIosRounded from "~icons/material-symbols/arrow-forward-ios-rounded";
     import MaterialSymbolsChromeRestoreOutlineRounded from "~icons/material-symbols/chrome-restore-outline-rounded";
@@ -69,7 +69,7 @@
         };
     });
 
-    const windowIcons: [typeof SvelteComponent<SvelteHTMLElements["svg"]>, string][] = [
+    const windowIcons: [Component, string][] = [
         [MaterialSymbolsHorizontalRuleRounded, "mt-1.5"],
         [MaterialSymbolsChromeRestoreOutlineRounded, "rotate-180"],
         [MaterialSymbolsCloseRounded, ""]
@@ -77,12 +77,12 @@
 </script>
 
 <div in:fade class="flex h-screen flex-col overflow-hidden">
-    <div class="sticky top-0 flex items-center py-5">
+    <div class="flex items-center py-5">
         <div class="text-md flex-1 text-center text-slate-400">Terminal</div>
-        <div class="fixed right-0 flex gap-2 p-2 text-slate-200">
+        <div class="fixed right-0 flex gap-2 p-2 text-slate-100">
             {#each windowIcons as [Icon, cls]}
                 <button
-                    class="flex size-6 cursor-default items-center justify-center overflow-hidden rounded-full bg-slate-800 p-1 transition-all duration-200 group-hover:scale-110 hover:bg-slate-800/80"
+                    class="flex size-6 cursor-default items-center justify-center overflow-hidden rounded-full bg-slate-800 p-1 transition-all duration-200 hover:bg-slate-800/80"
                     onclick={() => (defaultMode = true)}
                 >
                     <Icon class={cls} />

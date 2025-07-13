@@ -1,4 +1,5 @@
 import projects from "$lib/data/projects";
+import { getRing } from "$lib/data/ring";
 import socials from "$lib/data/socials";
 import { showHelp } from "$lib/terminal/help";
 import { writable, type Writable } from "svelte/store";
@@ -19,6 +20,12 @@ interface Cmds {
         }[];
     };
 }
+
+let ring = null;
+try {
+    // Workaround for SSR issues
+    ring = getRing(window.location.host);
+} catch {}
 
 export const cmds: Cmds = {
     help: {
@@ -162,6 +169,80 @@ export const cmds: Cmds = {
             }
         ]
     },
+    ...(ring
+        ? {
+              ring: {
+                  help: "View the ring",
+                  func: (args, input) => {
+                      output.update((prev) => [
+                          ...prev,
+                          {
+                              inp: input,
+                              res: `You're viewing the ${makeHyperlink(ring.name, ring.base)}. Use the options to navigate.`
+                          }
+                      ]);
+                  },
+                  opts: [
+                      {
+                          opts: ["-o", "--open"],
+                          help: "Opens the ring",
+                          func: (args, input) => {
+                              output.update((prev) => [
+                                  ...prev,
+                                  {
+                                      inp: input,
+                                      res: `Opening ${makeHyperlink(ring.name, ring.base)}...`
+                                  }
+                              ]);
+                              window.open(ring.base, "_blank");
+                          }
+                      },
+                      {
+                          opts: ["-n", "--next"],
+                          help: "Go to the next ring",
+                          func: (args, input) => {
+                              output.update((prev) => [
+                                  ...prev,
+                                  {
+                                      inp: input,
+                                      res: `Opening the next ring...`
+                                  }
+                              ]);
+                              window.open(`${ring.base}/${ring.next}`, "_blank");
+                          }
+                      },
+                      {
+                          opts: ["-p", "--previous"],
+                          help: "Go to the previous ring",
+                          func: (args, input) => {
+                              output.update((prev) => [
+                                  ...prev,
+                                  {
+                                      inp: input,
+                                      res: `Opening the previous ring...`
+                                  }
+                              ]);
+                              window.open(`${ring.base}/${ring.previous}`, "_blank");
+                          }
+                      },
+                      {
+                          opts: ["-r", "--random"],
+                          help: "Go to a random ring",
+                          func: (args, input) => {
+                              output.update((prev) => [
+                                  ...prev,
+                                  {
+                                      inp: input,
+                                      res: `Opening a random ring...`
+                                  }
+                              ]);
+                              window.open(`${ring.base}/${ring.random}`, "_blank");
+                          }
+                      }
+                  ]
+              }
+          }
+        : {}),
     echo: {
         help: "Prints the given text",
         func: (args, input) => {
