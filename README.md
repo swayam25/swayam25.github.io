@@ -6,7 +6,7 @@ My portfolio website
 
 </div>
 
-## 🚀 Installation
+## 🚩 Installation
 
 1. Clone this repository
     ```sh
@@ -21,19 +21,11 @@ My portfolio website
 
 3. Start the app
     ```sh
-    pnpm run dev -- --port 2500
+    pnpm run dev
     ```
 
-## 🌐 Production
+## 🚀 Production
 
-1. Follow steps 1 & 2 from the [installation guide](#-installation). *Ignore if already done.*
-
-2. Build the app
-    ```sh
-    pnpm run build
-    ```
-
-3. Preview the app
-    ```sh
-    pnpm run preview -- --port 2500
-    ```
+- This project is configured to use the `static-adapter`, which enables deployment on static hosting services such as GitHub Pages, Cloudflare Pages/Workers, and similar platforms.
+- The project is currently hosted on GitHub Pages with an automated GitHub Workflow that deploys changes upon push to the `main` branch.
+- For detailed GitHub Pages implementation configuration, refer to [`.github/workflows/pages.yml`](./.github/workflows/pages.yml).

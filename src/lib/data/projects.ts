@@ -9,6 +9,13 @@ interface Project {
 }
 
 const projects: Project = {
+    "MC Addon": {
+        desc: "Welcome to the official hub of MC Addon! A competitive, community-driven Lifesteal Minecraft Network with thrilling mechanics, epic events, and intense mini-games!",
+        url: "https://mcaddon.fun",
+        img: "/project/mcaddon.webp",
+        time: 2025,
+        tags: ["Minecraft", "Lifesteal", "SMP"]
+    },
     Aero: {
         desc: "Aero makes listening to music feel light and breezy.",
         url: "https://github.com/swayam25/Aero",

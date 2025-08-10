@@ -149,11 +149,10 @@
                                 <div
                                     class="flex flex-col items-center justify-start gap-y-4 md:flex-row md:items-start md:gap-x-4 md:gap-y-0"
                                 >
-                                    <img
-                                        src={data.img}
-                                        alt={name}
-                                        class="rounded-lg border border-slate-900 object-cover md:h-24 md:w-48"
-                                    />
+                                    <div
+                                        class="aspect-video w-full rounded-lg border border-slate-900 bg-slate-900 bg-cover bg-center object-cover md:h-24 md:w-auto"
+                                        style="background-image: url({data.img});"
+                                    ></div>
                                     <div class="flex flex-col items-start justify-center">
                                         <div class="flex w-full items-center justify-between">
                                             <div class="flex items-center justify-start gap-x-1">
