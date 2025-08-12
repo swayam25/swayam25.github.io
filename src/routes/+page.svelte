@@ -128,7 +128,7 @@
                         > opened up a whole new world for me. As I delved deeper into backend, my curiosity
                         led me to explore <InlineLink href="https://go.dev" icon={SimpleIconsGo}
                             >Go</InlineLink
-                        >. Now, I enjoy building full-stack applications.
+                        >.
                         <br /><br />
                         Now, I enjoy building full-stack applications. My coding journey is ongoing,
                         and I love the challenges and growth it brings. Coding, to me, is an artistic
