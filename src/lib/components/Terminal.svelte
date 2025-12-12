@@ -2,13 +2,9 @@
     import { cmds, output, setDefaultModeSetter } from "$lib/terminal/cmds";
     import { showCommandHelp } from "$lib/terminal/help";
     import { handleKeys, setInput } from "$lib/terminal/keys";
-    import type { Component } from "svelte";
     import { onMount } from "svelte";
     import { fade } from "svelte/transition";
     import MaterialSymbolsArrowForwardIosRounded from "~icons/material-symbols/arrow-forward-ios-rounded";
-    import MaterialSymbolsChromeRestoreOutlineRounded from "~icons/material-symbols/chrome-restore-outline-rounded";
-    import MaterialSymbolsCloseRounded from "~icons/material-symbols/close-rounded";
-    import MaterialSymbolsHorizontalRuleRounded from "~icons/material-symbols/horizontal-rule-rounded";
 
     let { defaultMode = $bindable() }: { defaultMode: boolean } = $props();
     let input: string = $state("");
@@ -68,29 +64,10 @@
             input && input.focus();
         };
     });
-
-    const windowIcons: [Component, string][] = [
-        [MaterialSymbolsHorizontalRuleRounded, "mt-1.5"],
-        [MaterialSymbolsChromeRestoreOutlineRounded, "rotate-180"],
-        [MaterialSymbolsCloseRounded, ""]
-    ];
 </script>
 
-<div in:fade class="flex h-screen flex-col overflow-hidden">
-    <div class="flex items-center py-5">
-        <div class="text-md flex-1 text-center text-slate-400">Terminal</div>
-        <div class="fixed right-0 flex gap-2 p-2 text-slate-100">
-            {#each windowIcons as [Icon, cls]}
-                <button
-                    class="flex size-6 cursor-default items-center justify-center overflow-hidden rounded-full bg-slate-800 p-1 transition-all duration-200 hover:bg-slate-800/80"
-                    onclick={() => (defaultMode = true)}
-                >
-                    <Icon class={cls} />
-                </button>
-            {/each}
-        </div>
-    </div>
-    <div class="overflow-hidden overflow-y-scroll px-5 text-sm whitespace-pre-wrap">
+<div in:fade class="flex h-screen w-full flex-col overflow-hidden">
+    <div class="overflow-hidden overflow-y-scroll p-5 pt-10 text-sm whitespace-pre-wrap">
         {#each $output as { inp, res, isError, restrict }, i}
             <div transition:fade={{ duration: 100 }} class="flex flex-col">
                 {#if inp}
@@ -108,10 +85,10 @@
                 {/if}
             </div>
         {/each}
-        <div class="flex items-center">
+        <div class="flex items-center gap-1">
             <p class="whitespace-nowrap text-blue-400">~</p>
             <MaterialSymbolsArrowForwardIosRounded
-                class="size-4 {lastOutput.isError ? 'text-red-400' : 'text-green-400'} mr-1"
+                class="size-4 {lastOutput.isError ? 'text-red-400' : 'text-green-400'}"
             />
             <input
                 type="text"

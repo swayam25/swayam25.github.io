@@ -1,7 +1,6 @@
 <script lang="ts">
     import Button from "$lib/components/Button.svelte";
     import InlineLink from "$lib/components/InlineLink.svelte";
-    import Ring from "$lib/components/Ring.svelte";
     import Terminal from "$lib/components/Terminal.svelte";
     import projects from "$lib/data/projects";
     import socials from "$lib/data/socials";
@@ -25,34 +24,35 @@
     <title>Swayam</title>
 </svelte:head>
 
-<div class="container m-auto">
-    <!-- Toggle button -->
-    <Button
-        size="md"
-        class="fixed right-0 bottom-0 m-5"
-        onclick={() => {
-            defaultMode = !defaultMode;
-        }}
-    >
-        {#if defaultMode}
-            <span
-                in:fly={{ y: -25, easing: expoOut }}
-                class="flex size-full items-center justify-center gap-2"
-            >
-                <SolarProgrammingOutline class="size-fit" />
-                <span>Terminal</span>
-            </span>
-        {:else}
-            <span
-                in:fly={{ y: 25, easing: expoOut }}
-                class="flex size-full items-center justify-center gap-2"
-            >
-                <SolarWidgetOutline class="size-fit" />
-                <span>Default</span>
-            </span>
-        {/if}
-    </Button>
+<!-- Toggle button -->
+<Button
+    size="md"
+    class="fixed right-0 bottom-0 m-5 h-11"
+    onclick={() => {
+        defaultMode = !defaultMode;
+    }}
+>
     {#if defaultMode}
+        <span
+            in:fly={{ y: -25, easing: expoOut }}
+            class="flex size-full items-center justify-center gap-2"
+        >
+            <SolarProgrammingOutline class="size-fit" />
+            <span>Terminal</span>
+        </span>
+    {:else}
+        <span
+            in:fly={{ y: 25, easing: expoOut }}
+            class="flex size-full items-center justify-center gap-2"
+        >
+            <SolarWidgetOutline class="size-fit" />
+            <span>Default</span>
+        </span>
+    {/if}
+</Button>
+
+{#if defaultMode}
+    <div class="container mx-auto min-h-screen">
         <!-- Main Page -->
         <div
             in:fade
@@ -63,7 +63,7 @@
                 class="flex flex-col items-start justify-between transition-all lg:sticky lg:top-0 lg:h-screen lg:w-1/2 lg:py-24"
             >
                 <div class="flex h-full flex-col items-start justify-between gap-4 lg:max-w-md">
-                    <div class="flex h-full flex-col items-start justify-start gap-4">
+                    <div class="flex h-full flex-col items-start justify-between gap-4">
                         <!-- Profile -->
                         <div class="flex flex-col items-start justify-start">
                             <div class="flex items-center justify-start gap-x-2">
@@ -96,12 +96,6 @@
                             {/each}
                         </div>
                     </div>
-                    <!-- Ring -->
-                    <div class="mt-5 flex w-full items-center justify-center">
-                        <div class="w-full sm:w-fit">
-                            <Ring />
-                        </div>
-                    </div>
                 </div>
             </header>
             <!-- Content -->
@@ -130,10 +124,9 @@
                             >Go</InlineLink
                         >.
                         <br /><br />
-                        Now, I enjoy building full-stack applications. My coding journey is ongoing,
-                        and I love the challenges and growth it brings. Coding, to me, is an artistic
-                        expression, a harmonious combination of logic and grace that shapes smooth user
-                        experiences.
+                        Now, I enjoy building full-stack applications. My coding journey is ongoing, and
+                        I love the challenges and growth it brings. Coding, to me, is an artistic expression,
+                        a harmonious combination of logic and grace that shapes smooth user experiences.
                     </p>
                 </section>
                 <!-- Projects -->
@@ -196,8 +189,8 @@
                 </footer>
             </main>
         </div>
-    {:else}
-        <!-- Terminal -->
-        <Terminal bind:defaultMode />
-    {/if}
-</div>
+    </div>
+{:else}
+    <!-- Terminal -->
+    <Terminal bind:defaultMode />
+{/if}
