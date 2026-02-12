@@ -1,7 +1,7 @@
 import type { Component } from "svelte";
 import Lavalink from "~icons/my-icons/lavalink";
 import Tebex from "~icons/my-icons/tebex";
-import SimpleIconsCloudflarepages from "~icons/simple-icons/cloudflarepages";
+import SimpleIconsCloudflareworkers from "~icons/simple-icons/cloudflareworkers";
 import SimpleIconsDiscord from "~icons/simple-icons/discord";
 import SimpleIconsDocker from "~icons/simple-icons/docker";
 import SimpleIconsFastapi from "~icons/simple-icons/fastapi";
@@ -39,7 +39,7 @@ const projects: Project = {
             { icon: SimpleIconsSvelte, name: "SvelteKit" },
             { icon: SimpleIconsTailwindcss, name: "Tailwind CSS" },
             { icon: SimpleIconsSupabase, name: "Supabase" },
-            { icon: SimpleIconsCloudflarepages, name: "Cloudflare Pages" },
+            { icon: SimpleIconsCloudflareworkers, name: "Cloudflare Workers" },
             { icon: Tebex, name: "Tebex" },
             { icon: SimpleIconsDiscord, name: "Discord OAuth" }
         ]
