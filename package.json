@@ -12,16 +12,16 @@
     },
     "devDependencies": {
         "@sveltejs/adapter-static": "^3.0.10",
-        "@sveltejs/kit": "^2.49.5",
+        "@sveltejs/kit": "^2.50.2",
         "@sveltejs/vite-plugin-svelte": "^4.0.4",
         "@tailwindcss/postcss": "^4.1.18",
         "@tailwindcss/vite": "^4.1.18",
         "postcss": "^8.5.6",
-        "prettier": "^3.7.4",
-        "prettier-plugin-svelte": "^3.4.0",
+        "prettier": "^3.8.1",
+        "prettier-plugin-svelte": "^3.4.1",
         "prettier-plugin-tailwindcss": "^0.7.2",
-        "svelte": "^5.45.10",
-        "svelte-check": "^4.3.4",
+        "svelte": "^5.50.2",
+        "svelte-check": "^4.3.6",
         "tailwindcss": "^4.1.18",
         "tslib": "^2.8.1",
         "typescript": "^5.9.3",
@@ -29,7 +29,8 @@
         "vite": "^5.4.21"
     },
     "dependencies": {
-        "@iconify/json": "^2.2.417",
+        "@iconify/json": "^2.2.438",
+        "animejs": "^4.3.5",
         "clsx": "^2.1.1",
         "tailwind-merge": "^3.4.0"
     },

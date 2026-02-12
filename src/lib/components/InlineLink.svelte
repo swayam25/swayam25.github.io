@@ -16,7 +16,7 @@
     {href}
     target="_blank"
     class={cn(
-        "inline-block border-b border-slate-800 text-slate-100 transition-colors duration-200 hover:border-slate-100",
+        "relative inline-block text-base text-slate-50 transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-[0.2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-slate-50 after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100",
         className
     )}
 >
