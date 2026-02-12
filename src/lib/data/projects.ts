@@ -102,7 +102,7 @@ const projects: Project = {
     },
 
     "Swayam's Portfolio": {
-        desc: "My porfolio website. Shows all my info, my projects etc. Check it!",
+        desc: "My porfolio website. Shows all my info, my projects etc...",
         url: "https://github.com/swayam25/swayam25.github.io",
         img: "/project/swayam.webp",
         time: 2022,
