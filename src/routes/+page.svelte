@@ -127,7 +127,7 @@
                             <div class="flex items-center justify-start gap-x-2">
                                 <div
                                     class="profile-image size-20 rounded-lg bg-cover bg-center"
-                                    style="background-image: url('https://github.com/swayam25.png');"
+                                    style="background-image: url('/swayam.webp');"
                                 ></div>
                                 <div class="flex flex-col items-start justify-center">
                                     <h1 class="name text-4xl font-semibold lg:text-5xl">Swayam</h1>
