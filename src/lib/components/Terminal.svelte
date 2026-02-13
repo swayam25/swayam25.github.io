@@ -4,7 +4,7 @@
     import { handleKeys, setInput } from "$lib/terminal/keys";
     import { onMount } from "svelte";
     import { fade } from "svelte/transition";
-    import MaterialSymbolsArrowForwardIosRounded from "~icons/material-symbols/arrow-forward-ios-rounded";
+    import LucideChevronRight from "~icons/lucide/chevron-right";
 
     let { defaultMode = $bindable() }: { defaultMode: boolean } = $props();
     let input: string = $state("");
@@ -71,10 +71,8 @@
         {#each $output as { inp, res, isError, restrict }, i}
             <div transition:fade={{ duration: 100 }} class="flex flex-col">
                 {#if inp}
-                    <span class="flex items-center gap-1">
-                        <MaterialSymbolsArrowForwardIosRounded
-                            class="block size-4 text-slate-400"
-                        />
+                    <span class="flex items-center gap-0.5">
+                        <LucideChevronRight class="block size-5 text-slate-400" />
                         <p class="max-w-fit">{inp}</p>
                     </span>
                 {/if}
@@ -85,10 +83,10 @@
                 {/if}
             </div>
         {/each}
-        <div class="flex items-center gap-1">
+        <div class="flex items-center gap-0.5">
             <p class="whitespace-nowrap text-blue-400">~</p>
-            <MaterialSymbolsArrowForwardIosRounded
-                class="size-4 {lastOutput.isError ? 'text-red-400' : 'text-green-400'}"
+            <LucideChevronRight
+                class="size-5 {lastOutput.isError ? 'text-red-400' : 'text-green-400'}"
             />
             <input
                 type="text"

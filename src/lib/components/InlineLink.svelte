@@ -22,7 +22,7 @@
 >
     {#if icon}
         {@const SvelteComponent = icon}
-        <SvelteComponent class="inline-block size-fit" />
+        <SvelteComponent class="inline size-fit align-text-bottom" />
     {/if}
     {@render children?.()}
 </a>

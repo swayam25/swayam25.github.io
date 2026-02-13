@@ -1,7 +1,7 @@
 import type { Component } from "svelte";
-import RiDiscordFill from "~icons/ri/discord-fill";
-import RiGithubFill from "~icons/ri/github-fill";
-import RiSpotifyFill from "~icons/ri/spotify-fill";
+import SimpleIconsDiscord from "~icons/simple-icons/discord";
+import SimpleIconsGithub from "~icons/simple-icons/github";
+import SimpleIconsSpotify from "~icons/simple-icons/spotify";
 
 interface Social {
     [key: string]: {
@@ -13,15 +13,15 @@ interface Social {
 const socials: Social = {
     GitHub: {
         url: "https://github.com/swayam25",
-        icon: RiGithubFill
+        icon: SimpleIconsGithub
     },
     Discord: {
         url: "https://discord.com/users/1272113262455951464",
-        icon: RiDiscordFill
+        icon: SimpleIconsDiscord
     },
     Spotify: {
         url: "https://open.spotify.com/user/31lozcjyk355j54nho6m5k5aulvm",
-        icon: RiSpotifyFill
+        icon: SimpleIconsSpotify
     }
 };
 

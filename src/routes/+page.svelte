@@ -4,21 +4,27 @@
     import Terminal from "$lib/components/Terminal.svelte";
     import projects from "$lib/data/projects";
     import socials from "$lib/data/socials";
-    import { animateTags, initPageAnimations, kickAnimation } from "$lib/utils/animations";
+    import {
+        DURATION,
+        animateTags,
+        initPageAnimations,
+        kickAnimation,
+        toggleBtnAnimation
+    } from "$lib/utils/animations";
     import { expoOut } from "svelte/easing";
     import { fly } from "svelte/transition";
-    import PhArrowRightBold from "~icons/ph/arrow-right-bold";
-    import PhArrowUpRightBold from "~icons/ph/arrow-up-right-bold";
+    import LucideArrowRight from "~icons/lucide/arrow-right";
+    import LucideArrowUpRight from "~icons/lucide/arrow-up-right";
+    import LucideGraduationCap from "~icons/lucide/graduation-cap";
+    import LucideLayoutPanelTop from "~icons/lucide/layout-panel-top";
+    import LucideTerminal from "~icons/lucide/terminal";
+    import MdiMinecraft from "~icons/mdi/minecraft";
     import SimpleIconsDiscord from "~icons/simple-icons/discord";
     import SimpleIconsFastapi from "~icons/simple-icons/fastapi";
     import SimpleIconsGo from "~icons/simple-icons/go";
     import SimpleIconsPython from "~icons/simple-icons/python";
     import SimpleIconsSvelte from "~icons/simple-icons/svelte";
     import SimpleIconsTailwindcss from "~icons/simple-icons/tailwindcss";
-    import SolarProgrammingOutline from "~icons/solar/programming-outline";
-    import SolarWidgetOutline from "~icons/solar/widget-outline";
-
-    const DURATION = { FAST: 150, MEDIUM: 200, SMOOTH: 800 };
 
     let defaultMode: boolean = $state(true);
     let projectsContainer: HTMLDivElement | undefined = $state();
@@ -27,6 +33,7 @@
     let aboutSection: HTMLElement | undefined = $state();
     let footerSection: HTMLElement | undefined = $state();
     let hasAnimated = $state(false);
+    let hasToggleBtnAnimated = $state(false);
 
     function handleProjectHover(index: number, isHovering: boolean) {
         const cards = projectsContainer?.querySelectorAll(".project-card");
@@ -54,6 +61,7 @@
             initPageAnimations({
                 name: headerContainer?.querySelector(".name") || undefined,
                 profile: headerContainer?.querySelector(".profile-section") || undefined,
+                profileImage: headerContainer?.querySelector(".profile-image") || undefined,
                 socials: headerContainer?.querySelectorAll(".socials-section a"),
                 about: aboutSection,
                 aboutText: aboutSection?.querySelectorAll(".about-text") || undefined,
@@ -61,6 +69,11 @@
                 projects: projectsContainer?.querySelectorAll(".project-card"),
                 footer: footerSection
             });
+        }
+
+        if (!hasToggleBtnAnimated && defaultMode) {
+            hasToggleBtnAnimated = true;
+            toggleBtnAnimation(document.querySelector(".toggle-btn") || undefined);
         }
     });
 </script>
@@ -72,7 +85,7 @@
 <!-- Toggle button -->
 <Button
     size="md"
-    class="fixed right-0 bottom-0 m-5 h-11"
+    class="toggle-btn fixed right-0 bottom-0 m-5 h-11"
     onclick={() => {
         defaultMode = !defaultMode;
     }}
@@ -80,17 +93,17 @@
     {#if defaultMode}
         <span
             in:fly={{ y: -25, duration: DURATION.MEDIUM, easing: expoOut }}
-            class="flex size-full items-center justify-center gap-2"
+            class="flex items-center justify-center gap-2"
         >
-            <SolarProgrammingOutline class="size-fit" />
+            <LucideTerminal class="size-fit" />
             <span>Terminal</span>
         </span>
     {:else}
         <span
             in:fly={{ y: 25, duration: DURATION.MEDIUM, easing: expoOut }}
-            class="flex size-full items-center justify-center gap-2"
+            class="flex items-center justify-center gap-2"
         >
-            <SolarWidgetOutline class="size-fit" />
+            <LucideLayoutPanelTop class="size-fit" />
             <span>Default</span>
         </span>
     {/if}
@@ -112,19 +125,20 @@
                         <!-- Profile -->
                         <div class="profile-section flex flex-col items-start justify-start">
                             <div class="flex items-center justify-start gap-x-2">
-                                <img
-                                    src="https://github.com/swayam25.png"
-                                    alt="Swayam Logo"
-                                    class="size-20 rounded-lg object-cover"
-                                />
+                                <div
+                                    class="profile-image size-20 rounded-lg bg-cover bg-center"
+                                    style="background-image: url('https://github.com/swayam25.png');"
+                                ></div>
                                 <div class="flex flex-col items-start justify-center">
                                     <h1 class="name text-4xl font-semibold lg:text-5xl">Swayam</h1>
-                                    <p class="font-base text-lg">Student</p>
+                                    <p class="flex items-center justify-start gap-2">
+                                        <LucideGraduationCap class="size-5" />
+                                        <span class="font-base text-lg"> Student</span>
+                                    </p>
                                 </div>
                             </div>
                             <p class="mt-2 text-slate-400">
-                                Have a passion for creating elegant and efficient code that delivers
-                                exceptional user experiences.
+                                Love building cool stuffs on the internet!
                             </p>
                         </div>
                         <!-- Socials -->
@@ -149,32 +163,41 @@
                 <section bind:this={aboutSection} aria-label="About Me">
                     <h1 class="visible text-xl font-semibold lg:hidden">ABOUT ME</h1>
                     <p class="about-text text-slate-400">
-                        Hi there! I started my coding journey in 2020 at the age of 12. It all began
-                        with <InlineLink href="https://python.org" icon={SimpleIconsPython}
-                            >Python</InlineLink
+                        Hi there! I'm Swayam, a passionate coder and student. My coding journey
+                        started in 2020 at the age of 12. It all began with <InlineLink
+                            href="https://python.org"
+                            icon={SimpleIconsPython}>Python</InlineLink
                         >, where I first created some <InlineLink
                             href="https://discord.com"
                             icon={SimpleIconsDiscord}>Discord Bots</InlineLink
                         >. As I got more into coding, I explored APIs using tools like <InlineLink
                             href="https://fastapi.tiangolo.com"
                             icon={SimpleIconsFastapi}>FastAPI</InlineLink
-                        >. I then moved on to mastering CLI apps before diving into frontend
+                        >. I then moved on to making CLI apps before diving into frontend
                         development. Learning <InlineLink
                             href="https://kit.svelte.dev"
                             icon={SimpleIconsSvelte}>SvelteKit</InlineLink
                         > & <InlineLink href="https://tailwindcss.com" icon={SimpleIconsTailwindcss}
                             >TailwindCSS</InlineLink
-                        > opened up a whole new world for me. As I delved deeper into backend, my curiosity
-                        led me to explore <InlineLink href="https://go.dev" icon={SimpleIconsGo}
-                            >Go</InlineLink
+                        > opened up a whole new world for me. After spending some time in frontend, I
+                        got interested in learning a new language, which led me to explore <InlineLink
+                            href="https://go.dev"
+                            icon={SimpleIconsGo}>Go</InlineLink
                         >.
-                        <br /><br />
                     </p>
+                    <br />
+                    <p class="about-text text-slate-400">
+                        Before getting into coding, I was an avid <InlineLink
+                            href="https://minecraft.net"
+                            icon={MdiMinecraft}>Minecraft</InlineLink
+                        > player, and that sparked my interest in maintaining servers, creating mods and
+                        plugins, which eventually led me to coding.
+                    </p>
+                    <br />
                     <p class="about-text text-slate-400">
                         Now, I enjoy building full-stack applications. My coding journey is ongoing,
-                        and I love the challenges and growth it brings. Coding, to me, is an
-                        artistic expression, a harmonious combination of logic and grace that shapes
-                        smooth user experiences.
+                        and I love the challenges and growth it brings. Currently I'm focused on
+                        improving my skills and contributing to open-source projects.
                     </p>
                 </section>
                 <!-- Projects -->
@@ -201,7 +224,7 @@
                                         <div class="flex w-full items-center justify-between">
                                             <div class="flex items-center justify-start gap-x-1">
                                                 <h2 class="text-lg font-semibold">{name}</h2>
-                                                <PhArrowUpRightBold
+                                                <LucideArrowUpRight
                                                     class="size-4 transition-transform duration-200 group-hover/item:translate-x-2 group-hover/item:-translate-y-1"
                                                 />
                                             </div>
@@ -235,7 +258,7 @@
                         class="group flex items-center justify-start gap-x-1"
                     >
                         <span>Get more projects here</span>
-                        <PhArrowRightBold
+                        <LucideArrowRight
                             class="inline-block size-4 transition-transform duration-200 group-hover:translate-x-2"
                         />
                     </InlineLink>
@@ -249,6 +272,7 @@
 {/if}
 
 <style>
+    :global(.toggle-btn),
     .profile-section,
     .socials-section a,
     section[aria-label="About Me"],

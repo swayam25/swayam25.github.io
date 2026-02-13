@@ -38,7 +38,7 @@ const projects: Project = {
             { icon: SimpleIconsTypescript, name: "TypeScript" },
             { icon: SimpleIconsSvelte, name: "SvelteKit" },
             { icon: SimpleIconsTailwindcss, name: "Tailwind CSS" },
-            { icon: SimpleIconsSupabase, name: "Supabase" },
+            { icon: SimpleIconsPostgresql, name: "PostgreSQL" },
             { icon: SimpleIconsCloudflareworkers, name: "Cloudflare Workers" },
             { icon: Tebex, name: "Tebex" },
             { icon: SimpleIconsDiscord, name: "Discord OAuth" }
