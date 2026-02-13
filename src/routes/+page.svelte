@@ -178,7 +178,7 @@
                             href="https://kit.svelte.dev"
                             icon={SimpleIconsSvelte}>SvelteKit</InlineLink
                         > & <InlineLink href="https://tailwindcss.com" icon={SimpleIconsTailwindcss}
-                            >TailwindCSS</InlineLink
+                            >Tailwind CSS</InlineLink
                         > opened up a whole new world for me. After spending some time in frontend, I
                         got interested in learning a new language, which led me to explore <InlineLink
                             href="https://go.dev"
