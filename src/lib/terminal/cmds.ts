@@ -46,7 +46,7 @@ export const cmds: Cmds = {
                 ...prev,
                 {
                     inp: input,
-                    res: `Hi, I'm <span class="text-cyan-400">Swayam</span>, a full stack developer. I have a passion for creating elegant and efficient code that delivers exceptional user experiences.`
+                    res: `Hi, I'm <span class="text-cyan-400">Swayam</span>, a passionate coder and student. I love building cool stuffs on the internet!`
                 }
             ]);
         }
