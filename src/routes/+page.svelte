@@ -287,4 +287,31 @@
     .tags-container {
         will-change: transform, max-height;
     }
+
+    /* No-JS fallbacks */
+
+    /* Hide JS-only controls */
+    :global(html.no-js .toggle-btn) {
+        display: none;
+    }
+
+    /* Restore visibility */
+    :global(html.no-js) .profile-section,
+    :global(html.no-js) .socials-section a,
+    :global(html.no-js) section[aria-label="About Me"],
+    :global(html.no-js) section[aria-label="Projects"] > h1,
+    :global(html.no-js) .project-card,
+    :global(html.no-js) footer {
+        opacity: 1;
+    }
+
+    /* Tags must be visible immediately so CSS hover expand reveals them */
+    :global(html.no-js) .project-tag {
+        opacity: 1;
+    }
+
+    /* SSR renders pointer-events-none on cards when hasAnimated=false */
+    :global(html.no-js) .project-card {
+        pointer-events: auto;
+    }
 </style>
