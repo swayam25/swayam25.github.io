@@ -34,3 +34,46 @@ body {
     background-color: var(--color-slate-800);
     border-radius: 0px;
 }
+
+.toggle-btn,
+.profile-section,
+.socials-section a,
+section[aria-label="About Me"],
+section[aria-label="Projects"] > h1,
+.project-card,
+.project-tag,
+footer {
+    opacity: 0;
+}
+
+.project-card,
+.tags-container {
+    will-change: transform, max-height;
+}
+
+/* No-JS fallbacks */
+
+/* Hide JS-only controls */
+html.no-js .toggle-btn {
+    display: none;
+}
+
+/* Restore visibility */
+html.no-js .profile-section,
+html.no-js .socials-section a,
+html.no-js section[aria-label="About Me"],
+html.no-js section[aria-label="Projects"] > h1,
+html.no-js .project-card,
+html.no-js footer {
+    opacity: 1;
+}
+
+/* Tags must be visible immediately so CSS hover expand reveals them */
+html.no-js .project-tag {
+    opacity: 1;
+}
+
+/* SSR renders pointer-events-none on cards when hasAnimated=false */
+html.no-js .project-card {
+    pointer-events: auto;
+}

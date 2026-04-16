@@ -5,7 +5,7 @@ import { writable, type Writable } from "svelte/store";
 
 export const output: Writable<
     { inp: string; res: string; isError?: boolean; restrict?: boolean }[]
-> = writable([]);
+> = writable([{ inp: "", res: 'Welcome to the terminal. Type "help" for a list of commands.' }]);
 export let defaultModeSetter: (value: boolean) => void;
 
 interface Cmds {

@@ -18,7 +18,7 @@
     import LucideGraduationCap from "~icons/lucide/graduation-cap";
     import LucideLayoutPanelTop from "~icons/lucide/layout-panel-top";
     import LucideTerminal from "~icons/lucide/terminal";
-    import MdiMinecraft from "~icons/mdi/minecraft";
+    import Minecraft from "~icons/my-icons/minecraft";
     import SimpleIconsDiscord from "~icons/simple-icons/discord";
     import SimpleIconsFastapi from "~icons/simple-icons/fastapi";
     import SimpleIconsGo from "~icons/simple-icons/go";
@@ -84,7 +84,6 @@
 
 <!-- Toggle button -->
 <Button
-    size="md"
     class="toggle-btn fixed right-0 bottom-0 m-5 h-11"
     onclick={() => {
         defaultMode = !defaultMode;
@@ -113,7 +112,7 @@
     <div class="container mx-auto min-h-screen">
         <!-- Main Page -->
         <div
-            class="p-5 pt-10 transition-all duration-200 lg:flex lg:items-start lg:justify-between lg:py-0 lg:pt-0"
+            class="p-4 pt-10 transition-all duration-200 lg:flex lg:items-start lg:justify-between lg:py-0 lg:pt-0"
         >
             <!-- Sidebar -->
             <header
@@ -142,13 +141,13 @@
                             </p>
                         </div>
                         <!-- Socials -->
-                        <div class="socials-section mt-5 flex items-center justify-start gap-x-4">
+                        <div class="socials-section mt-4 flex items-center justify-start gap-x-6">
                             {#each Object.entries(socials) as [name, data]}
                                 <a
                                     href={data.url}
                                     target="_blank"
                                     title={name}
-                                    class="text-slate-400 transition-colors duration-200 hover:text-slate-50"
+                                    class="transform-gpu text-slate-400 transition-all duration-200 hover:scale-105 hover:text-slate-50 active:scale-95"
                                 >
                                     <data.icon class="size-8" />
                                 </a>
@@ -189,7 +188,7 @@
                     <p class="about-text text-slate-400">
                         Before getting into coding, I was an avid <InlineLink
                             href="https://minecraft.net"
-                            icon={MdiMinecraft}>Minecraft</InlineLink
+                            icon={Minecraft}>Minecraft</InlineLink
                         > player, and that sparked my interest in maintaining servers, creating mods and
                         plugins, which eventually led me to coding.
                     </p>
@@ -203,12 +202,12 @@
                 <!-- Projects -->
                 <section bind:this={projectsSection} aria-label="Projects" class="mt-10">
                     <h1 class="visible text-xl font-semibold lg:hidden">PROJECTS</h1>
-                    <div bind:this={projectsContainer} class="group mt-2 flex flex-col gap-y-5">
+                    <div bind:this={projectsContainer} class="group mt-2 flex flex-col gap-y-4">
                         {#each Object.entries(projects) as [name, data], index}
                             <a
                                 href={data.url}
                                 target="_blank"
-                                class="project-card group/item rounded-lg p-2 transition-all duration-200 group-hover:opacity-50! hover:bg-slate-900 hover:opacity-100!"
+                                class="project-card group/item block rounded-xl border-t border-transparent p-4 transition-all duration-400 group-hover:opacity-50! hover:border-slate-800/50 hover:bg-slate-900/50 hover:opacity-100! hover:shadow-xl hover:shadow-slate-950/50 hover:backdrop-blur-sm"
                                 class:pointer-events-none={!hasAnimated}
                                 onmouseenter={() => handleProjectHover(index, true)}
                                 onmouseleave={() => handleProjectHover(index, false)}
@@ -217,7 +216,7 @@
                                     class="flex flex-col items-center justify-start gap-y-4 md:flex-row md:items-start md:gap-x-4 md:gap-y-0"
                                 >
                                     <div
-                                        class="aspect-video w-full rounded-lg border border-slate-900 bg-slate-900 bg-cover bg-center object-cover md:h-24 md:w-auto"
+                                        class="aspect-video w-full rounded-lg border border-slate-900/50 bg-slate-900 bg-cover bg-center object-cover group-hover:border-slate-800/50 md:h-24 md:w-auto"
                                         style="background-image: url({data.img});"
                                     ></div>
                                     <div class="flex flex-1 flex-col items-start justify-center">
@@ -270,48 +269,3 @@
     <!-- Terminal -->
     <Terminal bind:defaultMode />
 {/if}
-
-<style>
-    :global(.toggle-btn),
-    .profile-section,
-    .socials-section a,
-    section[aria-label="About Me"],
-    section[aria-label="Projects"] > h1,
-    .project-card,
-    .project-tag,
-    footer {
-        opacity: 0;
-    }
-
-    .project-card,
-    .tags-container {
-        will-change: transform, max-height;
-    }
-
-    /* No-JS fallbacks */
-
-    /* Hide JS-only controls */
-    :global(html.no-js .toggle-btn) {
-        display: none;
-    }
-
-    /* Restore visibility */
-    :global(html.no-js) .profile-section,
-    :global(html.no-js) .socials-section a,
-    :global(html.no-js) section[aria-label="About Me"],
-    :global(html.no-js) section[aria-label="Projects"] > h1,
-    :global(html.no-js) .project-card,
-    :global(html.no-js) footer {
-        opacity: 1;
-    }
-
-    /* Tags must be visible immediately so CSS hover expand reveals them */
-    :global(html.no-js) .project-tag {
-        opacity: 1;
-    }
-
-    /* SSR renders pointer-events-none on cards when hasAnimated=false */
-    :global(html.no-js) .project-card {
-        pointer-events: auto;
-    }
-</style>

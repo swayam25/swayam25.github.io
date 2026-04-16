@@ -5,7 +5,6 @@ import SimpleIconsCloudflareworkers from "~icons/simple-icons/cloudflareworkers"
 import SimpleIconsDiscord from "~icons/simple-icons/discord";
 import SimpleIconsDocker from "~icons/simple-icons/docker";
 import SimpleIconsFastapi from "~icons/simple-icons/fastapi";
-import SimpleIconsGithub from "~icons/simple-icons/github";
 import SimpleIconsJavascript from "~icons/simple-icons/javascript";
 import SimpleIconsPostgresql from "~icons/simple-icons/postgresql";
 import SimpleIconsPython from "~icons/simple-icons/python";
@@ -98,19 +97,6 @@ const projects: Project = {
             { icon: SimpleIconsJavascript, name: "JavaScript" },
             { icon: SimpleIconsSvelte, name: "SvelteKit" },
             { icon: SimpleIconsTailwindcss, name: "Tailwind CSS" }
-        ]
-    },
-
-    "Swayam's Portfolio": {
-        desc: "My porfolio website. Shows all my info, my projects etc...",
-        url: "https://github.com/swayam25/swayam25.github.io",
-        img: "/project/swayam.webp",
-        time: 2022,
-        tags: [
-            { icon: SimpleIconsTypescript, name: "TypeScript" },
-            { icon: SimpleIconsSvelte, name: "SvelteKit" },
-            { icon: SimpleIconsTailwindcss, name: "Tailwind CSS" },
-            { icon: SimpleIconsGithub, name: "GitHub Pages" }
         ]
     },
 

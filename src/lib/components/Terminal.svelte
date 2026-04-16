@@ -10,14 +10,38 @@
     let input: string = $state("");
     let lastOutput = $derived.by(() => $output[$output.length - 1] || { isError: false });
 
+    let inputEl: HTMLInputElement | undefined = $state();
+    let measureSpan: HTMLSpanElement | undefined = $state();
+    let cursorPos = $state(0);
+    let cursorLeft = $state(0);
+    let isFocused = $state(false);
+
     setDefaultModeSetter((value: boolean) => {
         defaultMode = value;
     });
     setInput((value: string) => {
         input = value;
+        if (inputEl) cursorPos = input.length;
+    });
+
+    $effect(() => {
+        // trigger on input / cursorPos changes
+        input;
+        cursorPos;
+        if (measureSpan) {
+            measureSpan.textContent = input.slice(0, cursorPos);
+            cursorLeft = measureSpan.getBoundingClientRect().width;
+        }
     });
 
     function handleCommand() {
+        if (!input.trim()) {
+            output.update((prev) => [...prev, { inp: input, res: "" }]);
+            input = "";
+            cursorPos = 0;
+            return;
+        }
+
         const commands = input.split("&&").map((cmd) => cmd.trim());
         for (const command of commands) {
             if (!command) continue;
@@ -53,54 +77,137 @@
             }
         }
         input = "";
+        cursorPos = 0;
+    }
+
+    function initFocus(node: HTMLInputElement) {
+        node.focus();
+        setTimeout(() => node.focus(), 150);
     }
 
     onMount(() => {
-        output.set([
-            { inp: "", res: 'Welcome to the terminal. Type "help" for a list of commands.' }
-        ]);
-        document.onclick = document.onkeydown = () => {
-            const input = document.querySelector("input");
-            input && input.focus();
+        const handleGlobalKeydown = (e: KeyboardEvent) => {
+            if (
+                !inputEl ||
+                document.activeElement === inputEl ||
+                e.ctrlKey ||
+                e.metaKey ||
+                e.altKey
+            )
+                return;
+            if (window.getSelection()?.toString().length) window.getSelection()?.removeAllRanges();
+
+            inputEl.focus();
+
+            if (e.key.length === 1 || e.key === "Backspace") {
+                e.preventDefault();
+                if (e.key === "Backspace" && cursorPos > 0) {
+                    input = input.slice(0, cursorPos - 1) + input.slice(cursorPos);
+                    cursorPos--;
+                } else if (e.key.length === 1) {
+                    input = input.slice(0, cursorPos) + e.key + input.slice(cursorPos);
+                    cursorPos++;
+                }
+                setTimeout(() => inputEl?.setSelectionRange(cursorPos, cursorPos));
+            } else if (e.key === "Enter") {
+                e.preventDefault();
+                handleCommand();
+            }
         };
+
+        setTimeout(() => document.addEventListener("keydown", handleGlobalKeydown), 50);
+        return () => document.removeEventListener("keydown", handleGlobalKeydown);
     });
 </script>
 
-<div in:fade class="flex h-screen w-full flex-col overflow-hidden">
-    <div class="overflow-hidden overflow-y-scroll p-5 pt-10 text-sm whitespace-pre-wrap">
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div
+    in:fade
+    class="flex h-screen w-full flex-col overflow-hidden"
+    onclick={(e) => {
+        if (window.getSelection()?.toString().length) return;
+        inputEl?.focus();
+        if (e.target !== inputEl) {
+            setTimeout(() => {
+                if (inputEl)
+                    inputEl.selectionStart = inputEl.selectionEnd = cursorPos = input.length;
+            });
+        }
+    }}
+>
+    <div class="h-full overflow-y-scroll p-4 pt-10 text-sm whitespace-pre-wrap">
         {#each $output as { inp, res, isError, restrict }, i}
             <div transition:fade={{ duration: 100 }} class="flex flex-col">
-                {#if inp}
+                {#if inp !== "" || res === ""}
                     <span class="flex items-center gap-0.5">
-                        <LucideChevronRight class="block size-5 text-slate-400" />
+                        <LucideChevronRight class="block size-6 text-slate-400" />
                         <p class="max-w-fit">{inp}</p>
                     </span>
                 {/if}
-                {#if isError || restrict}
-                    <span>{res}</span>
-                {:else}
-                    <span>{@html res}</span>
+                {#if res !== ""}
+                    <div class="mt-1">
+                        {#if isError || restrict}
+                            <span>{res}</span>
+                        {:else}
+                            <span>{@html res}</span>
+                        {/if}
+                    </div>
                 {/if}
             </div>
         {/each}
-        <div class="flex items-center gap-0.5">
-            <p class="whitespace-nowrap text-blue-400">~</p>
+        <div class="flex items-center">
+            <p class="leading-none whitespace-nowrap text-blue-400">~</p>
             <LucideChevronRight
-                class="size-5 {lastOutput.isError ? 'text-red-400' : 'text-green-400'}"
+                class="size-6 {lastOutput.isError ? 'text-red-400' : 'text-green-400'}"
             />
-            <input
-                type="text"
-                id="terminal-input"
-                bind:value={input}
-                onkeydown={(e) => {
-                    (e.key === "Enter" && handleCommand()) || handleKeys(e, input, output);
-                    setTimeout(() => {
-                        const terminalInput = document.getElementById("terminal-input");
-                        terminalInput?.scrollIntoView({ behavior: "smooth", block: "end" });
-                    });
-                }}
-                class="w-full border-none bg-transparent focus:outline-hidden"
-            />
+            <div class="relative ml-1 flex h-6 flex-1 items-center overflow-hidden text-sm">
+                <span
+                    bind:this={measureSpan}
+                    class="pointer-events-none absolute text-sm whitespace-pre opacity-0"
+                ></span>
+
+                <div
+                    class="pointer-events-none absolute top-1/2 z-0 -translate-y-1/2 bg-slate-50 transition-all duration-40 ease-linear
+                     {isFocused
+                        ? 'animate-pulse mix-blend-difference'
+                        : 'border border-slate-50 bg-transparent'}"
+                    style="width: 8px; height: 20px; left: {cursorLeft}px;"
+                ></div>
+
+                <input
+                    use:initFocus
+                    bind:this={inputEl}
+                    type="text"
+                    id="terminal-input"
+                    bind:value={input}
+                    onfocus={() => (isFocused = true)}
+                    onblur={() => (isFocused = false)}
+                    onkeydown={(e) => {
+                        if (e.key === "Enter") handleCommand();
+                        else handleKeys(e, input, output);
+
+                        setTimeout(() => {
+                            if (inputEl) cursorPos = inputEl.selectionStart || 0;
+                            inputEl?.scrollIntoView({ block: "end" });
+                        });
+                    }}
+                    oninput={() => {
+                        if (inputEl) cursorPos = inputEl.selectionStart || 0;
+                    }}
+                    onselect={() => {
+                        if (inputEl) cursorPos = inputEl.selectionStart || 0;
+                    }}
+                    onmousedown={() => {
+                        setTimeout(() => {
+                            if (inputEl) cursorPos = inputEl.selectionStart || 0;
+                        });
+                    }}
+                    class="absolute inset-0 m-0 h-full w-full border-none bg-transparent p-0 text-sm leading-none caret-transparent ring-0 outline-none focus:outline-none"
+                    autocomplete="off"
+                    spellcheck="false"
+                />
+            </div>
         </div>
     </div>
 </div>

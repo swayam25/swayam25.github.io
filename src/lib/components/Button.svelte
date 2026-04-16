@@ -12,7 +12,7 @@
 
     let {
         class: className = "",
-        size = "",
+        size = "md",
         href = "",
         onclick = () => {},
         children
@@ -40,6 +40,7 @@
     tabindex="0"
     class={cn(
         "z-50 flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-slate-800 transition-all duration-200 hover:brightness-90",
+        "transform-gpu active:scale-95 active:brightness-95",
         sizeClass,
         className
     )}
