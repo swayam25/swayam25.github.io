@@ -15,6 +15,8 @@
     let cursorPos = $state(0);
     let cursorLeft = $state(0);
     let isFocused = $state(false);
+    let isTyping = $state(false);
+    let typingTimeout: ReturnType<typeof setTimeout> | undefined;
 
     setDefaultModeSetter((value: boolean) => {
         defaultMode = value;
@@ -25,13 +27,17 @@
     });
 
     $effect(() => {
-        // trigger on input / cursorPos changes
+        // Trigger on input / cursorPos changes
         input;
         cursorPos;
         if (measureSpan) {
             measureSpan.textContent = input.slice(0, cursorPos);
             cursorLeft = measureSpan.getBoundingClientRect().width;
         }
+
+        isTyping = true;
+        clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(() => (isTyping = false), 500);
     });
 
     function handleCommand() {
@@ -170,7 +176,9 @@
                 <div
                     class="pointer-events-none absolute top-1/2 z-0 -translate-y-1/2 bg-slate-50 transition-all duration-40 ease-linear
                      {isFocused
-                        ? 'animate-pulse mix-blend-difference'
+                        ? isTyping
+                            ? 'mix-blend-difference'
+                            : 'animate-pulse mix-blend-difference'
                         : 'border border-slate-50 bg-transparent'}"
                     style="width: 8px; height: 20px; left: {cursorLeft}px;"
                 ></div>
